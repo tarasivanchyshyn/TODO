@@ -1,12 +1,14 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 interface Todo {
-  id: number;
+  id: string;
   done: boolean;
   text: string;
+  creationDate: Date;
+  expirationDate: Date;
 }
 
-interface TodosState {
+export interface TodosState {
   todos: Todo[];
 }
 
@@ -18,7 +20,28 @@ const todosSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
-    addTodo: (state, action) => {},
+    addTodo: (state, action) => {
+      const now = new Date();
+      let tomorrow = new Date();
+      tomorrow.setHours(24, 0, 0, 0);
+
+      state.todos = state.todos.concat({
+        id: action.payload.id,
+        done: false,
+        text: action.payload.enteredText,
+        creationDate: now,
+        expirationDate: tomorrow
+      });
+    },
+    addTodoFromModal: (state, action) => {
+      state.todos = state.todos.concat({
+        id: action.payload.id,
+        done: false,
+        text: action.payload.enteredText,
+        creationDate: action.payload.createdDate,
+        expirationDate: action.payload.expiringDate
+      });
+    },
     removeTodo: (state, action) => {},
     toggleTodo: (state) => {}
   }
@@ -27,7 +50,11 @@ const todosSlice = createSlice({
 export const todosActions = todosSlice.actions;
 
 const store = configureStore({
-  reducer: todosSlice.reducer
+  reducer: todosSlice.reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    })
 });
 
 export default store;
