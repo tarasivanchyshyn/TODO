@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-interface Todo {
+export interface Todo {
   id: string;
   done: boolean;
   text: string;
@@ -25,21 +25,23 @@ const todosSlice = createSlice({
       let tomorrow = new Date();
       tomorrow.setHours(24, 0, 0, 0);
 
+      const { id, enteredText } = action.payload;
       state.todos = state.todos.concat({
-        id: action.payload.id,
+        id: id,
         done: false,
-        text: action.payload.enteredText,
+        text: enteredText,
         creationDate: now,
         expirationDate: tomorrow
       });
     },
     addTodoFromModal: (state, action) => {
+      const { id, enteredText, createdDate, expiringDate } = action.payload;
       state.todos = state.todos.concat({
-        id: action.payload.id,
+        id: id,
         done: false,
-        text: action.payload.enteredText,
-        creationDate: action.payload.createdDate,
-        expirationDate: action.payload.expiringDate
+        text: enteredText,
+        creationDate: createdDate,
+        expirationDate: expiringDate
       });
     },
     removeTodo: (state, action) => {},

@@ -25,7 +25,7 @@
   animation: slide-down 300ms ease-out forwards;
 }
 
-.modal h3 {
+.header {
   width: 100%;
   margin: 0 0 0.4rem 0;
   text-align: center;
@@ -40,20 +40,20 @@
   align-items: center;
 }
 
-.form .control {
+.control {
   width: 70%;
   display: flex;
   flex-direction: column;
   margin-bottom: 1.1rem;
 }
 
-.form label {
+.label {
   margin: 0 0 0.2rem 0.4rem;
   font-weight: 500;
   color: #3a9190;
 }
 
-.form input {
+.input {
   padding: 0.5rem;
   font-size: 1rem;
   border-radius: 4px;
@@ -61,7 +61,7 @@
   outline: 1px solid #858585;
 }
 
-.form input:focus {
+.input:focus {
   outline: 1px solid #858585;
   border: none;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
@@ -72,34 +72,20 @@
   margin-top: 0.5rem;
 }
 
-.form button {
+.btn {
   align-self: flex-end;
-  padding: 0.3rem 0.9rem;
   margin-right: 1rem;
-  font-size: 1rem;
-  border-radius: 4px;
-  color: white;
-  background-color: #3a9190;
-  border: 2px solid #3a9190;
-  cursor: pointer;
 }
 
-.form button:first-child {
+.cancel {
   background-color: white;
   color: #3a9190;
 }
 
-.form button:first-child:hover,
-.form button:first-child:active {
+.cancel:hover,
+.cancel:active {
   background-color: white;
   color: #163d3d;
-}
-
-.form button:hover,
-.form button:active {
-  background-color: #2a6b6a;
-  border: 2px solid #2a6b6a;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 }
 
 @media (min-width: 768px) {

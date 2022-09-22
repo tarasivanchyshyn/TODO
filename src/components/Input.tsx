@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import { useRef, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { todosActions } from '../store/store';
+import Button from './Button';
+
 import classes from './Input.module.css';
 
 type InputProps = {
@@ -13,7 +15,7 @@ function Input(props: InputProps) {
   const dispatch = useDispatch();
   const todoTextInputRef = useRef<HTMLInputElement>(null);
 
-  function submitHandler(event: React.FormEvent) {
+  function submitHandler(event: FormEvent) {
     event.preventDefault();
     const enteredText = todoTextInputRef.current!.value;
 
@@ -26,10 +28,15 @@ function Input(props: InputProps) {
 
   return (
     <form onSubmit={submitHandler} className={classes.form}>
-      <input ref={todoTextInputRef} type="text" placeholder="Enter todo text" />
-      <button type="button" onClick={props.onOpenCreateTodoModal}>
+      <input
+        className={classes.input}
+        ref={todoTextInputRef}
+        type="text"
+        placeholder="Enter todo text"
+      />
+      <Button className={classes.button} onClick={props.onOpenCreateTodoModal}>
         +
-      </button>
+      </Button>
     </form>
   );
 }

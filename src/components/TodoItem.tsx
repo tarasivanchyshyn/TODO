@@ -1,29 +1,31 @@
 import { ReactNode } from 'react';
 
 import dateFormater from '../helpers/dateFormater';
+import { Todo } from '../store/store';
+
 import classes from './TodoItem.module.css';
 
 type TodoItemProps = {
   children?: ReactNode;
-  id: string;
-  text: string;
-  done: boolean;
-  creationDate: Date;
-  expirationDate: Date;
+  item: Todo;
 };
 
 const TodoItem = (props: TodoItemProps) => {
+  const { text, creationDate, expirationDate } = props.item;
+
   return (
     <li className={classes.item}>
-      <div className={classes.text}>{props.text}</div>
+      <div className={classes.text}>{text}</div>
       <div className={classes.other}>
         <div className={classes.icons}></div>
         <div className={classes.dates}>
-          <div>
-            <span>Created:</span> {dateFormater(props.creationDate)}
+          <div className={classes.date}>
+            <span className={classes.header}>Created: </span>
+            {dateFormater(creationDate)}
           </div>
-          <div>
-            <span>Expires:</span> {dateFormater(props.expirationDate)}
+          <div className={classes.date}>
+            <span className={classes.header}>Expires: </span>
+            {dateFormater(expirationDate)}
           </div>
         </div>
       </div>

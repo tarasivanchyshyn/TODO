@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { todosActions } from '../store/store';
+import Button from './Button';
 
 import classes from './Modal.module.css';
 
@@ -52,41 +53,55 @@ function ModalOverlay(props: UniversalProps) {
 
   return (
     <div className={classes.modal}>
-      <h3>Create Todo</h3>
+      <h3 className={classes.header}>Create Todo</h3>
       <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.control}>
-          <label htmlFor="text">Todo text</label>
+          <label htmlFor="text" className={classes.label}>
+            Todo text
+          </label>
           <input
             ref={todoTextRef}
             type="text"
+            className={classes.input}
             id="text"
             placeholder="Enter todo text"
             required
           />
         </div>
         <div className={classes.control}>
-          <label htmlFor="created">Created date</label>
+          <label htmlFor="created" className={classes.label}>
+            Created date
+          </label>
           <input
             ref={todoCreatedRef}
             type="datetime-local"
+            className={classes.input}
             id="created"
             required
           />
         </div>
         <div className={classes.control}>
-          <label htmlFor="expires">Expiration date</label>
+          <label htmlFor="expires" className={classes.label}>
+            Expiration date
+          </label>
           <input
             ref={todoExpirationtRef}
             type="datetime-local"
+            className={classes.input}
             id="expires"
             required
           />
         </div>
         <div className={classes.actions}>
-          <button type="button" onClick={props.onClose}>
+          <Button
+            onClick={props.onClose}
+            className={`${classes.btn} ${classes.cancel}`}
+          >
             Cancel
-          </button>
-          <button type="submit">Save</button>
+          </Button>
+          <Button type="submit" className={classes.btn}>
+            Save
+          </Button>
         </div>
       </form>
     </div>
@@ -96,16 +111,12 @@ function ModalOverlay(props: UniversalProps) {
 const portalElement = document.getElementById('overlays')!;
 
 function Modal(props: UniversalProps) {
+  const { onClose } = props;
+
   return (
     <>
-      {ReactDOM.createPortal(
-        <Backdrop onClose={props.onClose} />,
-        portalElement
-      )}
-      {ReactDOM.createPortal(
-        <ModalOverlay onClose={props.onClose} />,
-        portalElement
-      )}
+      {ReactDOM.createPortal(<Backdrop onClose={onClose} />, portalElement)}
+      {ReactDOM.createPortal(<ModalOverlay onClose={onClose} />, portalElement)}
     </>
   );
 }
