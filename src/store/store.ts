@@ -45,7 +45,10 @@ const todosSlice = createSlice({
       });
     },
     removeTodo: (state, action) => {},
-    toggleTodo: (state) => {}
+    toggleTodo: (state, action) => {
+      const todoIndex = state.todos.findIndex((el) => el.id === action.payload);
+      state.todos[todoIndex].done = !state.todos[todoIndex].done;
+    }
   }
 });
 
