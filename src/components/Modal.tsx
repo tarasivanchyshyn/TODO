@@ -51,55 +51,55 @@ function ModalOverlay(props: UniversalProps) {
     props.onClose();
   }
 
+  const { modal, header, form, control, label, input, actions, btn, cancel } =
+    classes;
+
   return (
-    <div className={classes.modal}>
-      <h3 className={classes.header}>Create Todo</h3>
-      <form className={classes.form} onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor="text" className={classes.label}>
+    <div className={modal}>
+      <h3 className={header}>Create Todo</h3>
+      <form className={form} onSubmit={submitHandler}>
+        <div className={control}>
+          <label htmlFor="text" className={label}>
             Todo text
           </label>
           <input
             ref={todoTextRef}
             type="text"
-            className={classes.input}
+            className={input}
             id="text"
             placeholder="Enter todo text"
             required
           />
         </div>
-        <div className={classes.control}>
-          <label htmlFor="created" className={classes.label}>
+        <div className={control}>
+          <label htmlFor="created" className={label}>
             Created date
           </label>
           <input
             ref={todoCreatedRef}
             type="datetime-local"
-            className={classes.input}
+            className={input}
             id="created"
             required
           />
         </div>
-        <div className={classes.control}>
-          <label htmlFor="expires" className={classes.label}>
+        <div className={control}>
+          <label htmlFor="expires" className={label}>
             Expiration date
           </label>
           <input
             ref={todoExpirationtRef}
             type="datetime-local"
-            className={classes.input}
+            className={input}
             id="expires"
             required
           />
         </div>
-        <div className={classes.actions}>
-          <Button
-            onClick={props.onClose}
-            className={`${classes.btn} ${classes.cancel}`}
-          >
+        <div className={actions}>
+          <Button onClick={props.onClose} className={`${btn} ${cancel}`}>
             Cancel
           </Button>
-          <Button type="submit" className={classes.btn}>
+          <Button type="submit" className={btn}>
             Save
           </Button>
         </div>
