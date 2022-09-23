@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import dateFormater from '../helpers/dateFormater';
 import { todosActions } from '../store/store';
@@ -21,7 +23,7 @@ const TodoItem = (props: TodoItemProps) => {
 
   const crossed = `${done ? classes.crossed : ''}`;
 
-  const { item, input, texT, other, icons, crossmark, dates, date, header } =
+  const { item, input, txt, other, icons, icon, cross, dates, date, header } =
     classes;
 
   return (
@@ -32,12 +34,14 @@ const TodoItem = (props: TodoItemProps) => {
         onChange={toggleHandler}
         className={input}
       />
-      <div className={`${texT} ${crossed}`}>{text}</div>
+      <div className={`${txt} ${crossed}`}>{text}</div>
       <div className={other}>
         <div className={icons}>
-          <button className={crossmark} onClick={deleteHandler}>
-            ×
-          </button>
+          <FontAwesomeIcon
+            icon={faXmark}
+            className={`${icon} ${cross}`}
+            onClick={deleteHandler}
+          />
         </div>
         <div className={`${dates} ${crossed}`}>
           <div className={date}>

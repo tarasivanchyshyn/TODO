@@ -10,7 +10,7 @@ const Todos = () => {
 
   let content = <p className={classes.message}>No todos yet</p>;
 
-  if (items.length > 0) {
+  if (items.length) {
     content = (
       <ul className={classes.todos}>
         {items.map((item) => (
