@@ -44,7 +44,9 @@ const todosSlice = createSlice({
         expirationDate: expiringDate
       });
     },
-    removeTodo: (state, action) => {},
+    removeTodo: (state, action) => {
+      state.todos = state.todos.filter((el) => el.id !== action.payload);
+    },
     toggleTodo: (state, action) => {
       const todoIndex = state.todos.findIndex((el) => el.id === action.payload);
       state.todos[todoIndex].done = !state.todos[todoIndex].done;
