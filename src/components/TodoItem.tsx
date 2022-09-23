@@ -20,6 +20,7 @@ const TodoItem = (props: TodoItemProps) => {
   const deleteHandler = () => dispatch(todosActions.removeTodo(id));
 
   const crossed = `${done ? classes.crossed : ''}`;
+
   const { item, input, texT, other, icons, crossmark, dates, date, header } =
     classes;
 
