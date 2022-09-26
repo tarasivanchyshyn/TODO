@@ -9,11 +9,12 @@
 }
 
 .modal {
-  position: fixed;
+  position: absolute;
   width: 90%;
   max-width: 40rem;
-  top: 20vh;
-  left: 5%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -90%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,6 +62,10 @@
   outline: 1px solid #858585;
 }
 
+input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
 .input:focus {
   outline: 1px solid #858585;
   border: none;
@@ -88,19 +93,13 @@
   color: #163d3d;
 }
 
-@media (min-width: 768px) {
-  .modal {
-    left: calc(50% - 20rem);
-  }
-}
-
 @keyframes slide-down {
   from {
     opacity: 0;
-    transform: translateY(-3rem);
+    transform: translate(-50%, -140%);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, -90%);
   }
 }
