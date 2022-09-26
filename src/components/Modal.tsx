@@ -90,9 +90,9 @@ function ModalOverlay(props: UniversalProps) {
   const usedCreatedDate = formatDateString(todo?.creationDate);
   const usedExpirationDate = formatDateString(todo?.expirationDate);
 
-  const [usedText, setUsedText] = useState(todo?.text);
-  const usedTextHandler = (e: FormEvent<HTMLInputElement>) =>
-    setUsedText(e.currentTarget.value);
+  // const [usedText, setUsedText] = useState(todo?.text);
+  // const usedTextHandler = (e: FormEvent<HTMLInputElement>) =>
+  //   setUsedText(e.currentTarget.value);
 
   return (
     <>
@@ -106,8 +106,8 @@ function ModalOverlay(props: UniversalProps) {
             </label>
             <input
               ref={todoTextRef}
-              value={usedText ? usedText : ''}
-              onChange={usedTextHandler}
+              defaultValue={todo?.text ? todo.text : ''}
+              // onChange={usedTextHandler}
               type="text"
               className={input}
               id="text"
