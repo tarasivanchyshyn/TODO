@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { format, isBefore, isEqual } from 'date-fns';
 
 import formatDateString from '../helpers/formatDateString';
+import { dateFormat } from '../constants';
 import { todosActions, TodosState } from '../store/store';
 import Button from './Button';
 import ErrorModal from './ErrorModal';
@@ -56,14 +57,8 @@ function ModalOverlay(props: UniversalProps) {
       return;
     }
 
-    const createdDate: string = format(
-      enteredCreatedDateObj,
-      'dd.MM.yyyy HH:mm'
-    );
-    const expiringDate: string = format(
-      enteredExpirationDateObj,
-      'dd.MM.yyyy HH:mm'
-    );
+    const createdDate: string = format(enteredCreatedDateObj, dateFormat);
+    const expiringDate: string = format(enteredExpirationDateObj, dateFormat);
 
     if (todo) {
       dispatch(

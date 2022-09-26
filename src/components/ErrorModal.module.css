@@ -14,7 +14,7 @@
   max-width: 30rem;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -125%);
+  transform: translate(-50%, -123%);
   padding: 1rem;
   border-radius: 14px;
   display: flex;
@@ -22,6 +22,7 @@
   align-items: center;
   z-index: 100;
   background-color: white;
+  animation: slide-down 300ms ease-out forwards;
 }
 
 .header h2 {
@@ -39,4 +40,15 @@
 .button {
   align-self: flex-end;
   margin-right: 1rem;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -180%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -123%);
+  }
 }

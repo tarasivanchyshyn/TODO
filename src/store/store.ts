@@ -1,6 +1,8 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { format } from 'date-fns';
 
+import { dateFormat } from '../constants';
+
 export interface Todo {
   id: string;
   done: boolean;
@@ -23,8 +25,8 @@ const todosSlice = createSlice({
   reducers: {
     addTodo: (state, action) => {
       const date = new Date();
-      const now = format(date, 'dd.MM.yyyy HH:mm');
-      const tomorrow = format(date.setHours(24, 0, 0, 0), 'dd.MM.yyyy HH:mm');
+      const now = format(date, dateFormat);
+      const tomorrow = format(date.setHours(24, 0, 0, 0), dateFormat);
 
       const { id, enteredText } = action.payload;
       state.todos = state.todos.concat({
@@ -53,12 +55,13 @@ const todosSlice = createSlice({
       state.todos[todoIndex].done = !state.todos[todoIndex].done;
     },
     updateTodo: (state, action) => {
-      const todoIndex = state.todos.findIndex(
-        (el) => el.id === action.payload.id
-      );
-      state.todos[todoIndex].text = action.payload.enteredText;
-      state.todos[todoIndex].creationDate = action.payload.createdDate;
-      state.todos[todoIndex].expirationDate = action.payload.expiringDate;
+      const { id, enteredText, createdDate, expiringDate } = action.payload;
+      const todoIndex = state.todos.findIndex((el) => el.id === id);
+      const todo = state.todos[todoIndex];
+
+      todo.text = enteredText;
+      todo.creationDate = createdDate;
+      todo.expirationDate = expiringDate;
     }
   }
 });

@@ -18,14 +18,17 @@ const ModalOverlay = (props: UniversalProps) => {
   const { title, message, onClose } = props;
   const { modal, header, content, button } = classes;
 
+  const errorTitle = title ? <h2>{title}</h2> : <h2>{defaultErrorTitle}</h2>;
+  const errorMessage = message ? (
+    <p>{message}</p>
+  ) : (
+    <p>{defaultErrorMessage}</p>
+  );
+
   return (
     <div className={modal}>
-      <header className={header}>
-        {title ? <h2>{title}</h2> : <h2>{defaultErrorTitle}</h2>}
-      </header>
-      <div className={content}>
-        {message ? <p>{message}</p> : <p>{defaultErrorMessage}</p>}
-      </div>
+      <header className={header}>{errorTitle}</header>
+      <div className={content}>{errorMessage}</div>
       <Button onClick={onClose} className={button}>
         Close
       </Button>
