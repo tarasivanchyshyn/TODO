@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import { useRef, useState, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { format, isBefore } from 'date-fns';
+import { format, isBefore, isEqual } from 'date-fns';
 
 import formatDateString from '../helpers/formatDateString';
 import { todosActions, TodosState } from '../store/store';
@@ -45,19 +45,23 @@ function ModalOverlay(props: UniversalProps) {
       return;
     }
 
+    const enteredCreatedDateObj = new Date(enteredCreatedDate);
+    const enteredExpirationDateObj = new Date(enteredExpirationDate);
+
     if (
-      isBefore(new Date(enteredExpirationDate), new Date(enteredCreatedDate))
+      isBefore(enteredExpirationDateObj, enteredCreatedDateObj) ||
+      isEqual(enteredExpirationDateObj, enteredCreatedDateObj)
     ) {
       setDateError(true);
       return;
     }
 
     const createdDate: string = format(
-      new Date(enteredCreatedDate),
+      enteredCreatedDateObj,
       'dd.MM.yyyy HH:mm'
     );
     const expiringDate: string = format(
-      new Date(enteredExpirationDate),
+      enteredExpirationDateObj,
       'dd.MM.yyyy HH:mm'
     );
 
@@ -90,10 +94,6 @@ function ModalOverlay(props: UniversalProps) {
   const usedCreatedDate = formatDateString(todo?.creationDate);
   const usedExpirationDate = formatDateString(todo?.expirationDate);
 
-  // const [usedText, setUsedText] = useState(todo?.text);
-  // const usedTextHandler = (e: FormEvent<HTMLInputElement>) =>
-  //   setUsedText(e.currentTarget.value);
-
   return (
     <>
       {dateError && <ErrorModal onClose={() => setDateError(false)} />}
@@ -107,7 +107,6 @@ function ModalOverlay(props: UniversalProps) {
             <input
               ref={todoTextRef}
               defaultValue={todo?.text ? todo.text : ''}
-              // onChange={usedTextHandler}
               type="text"
               className={input}
               id="text"
