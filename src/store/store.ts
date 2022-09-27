@@ -3,6 +3,12 @@ import { format } from 'date-fns';
 
 import { dateFormat } from '../constants';
 
+export const filters = {
+  ALL: 'ALL',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED'
+};
+
 export interface Todo {
   id: string;
   done: boolean;
@@ -13,10 +19,12 @@ export interface Todo {
 
 export interface TodosState {
   todos: Todo[];
+  filterBy: string;
 }
 
 const initialState: TodosState = {
-  todos: []
+  todos: [],
+  filterBy: filters.ALL
 };
 
 const todosSlice = createSlice({
@@ -29,26 +37,35 @@ const todosSlice = createSlice({
       const tomorrow = format(date.setHours(24, 0, 0, 0), dateFormat);
 
       const { id, enteredText } = action.payload;
-      state.todos = state.todos.concat({
-        id: id,
-        done: false,
-        text: enteredText,
-        creationDate: now,
-        expirationDate: tomorrow
-      });
+      state.todos = [
+        {
+          id: id,
+          done: false,
+          text: enteredText,
+          creationDate: now,
+          expirationDate: tomorrow
+        },
+        ...state.todos
+      ];
     },
     addTodoFromModal: (state, action) => {
       const { id, enteredText, createdDate, expiringDate } = action.payload;
-      state.todos = state.todos.concat({
-        id: id,
-        done: false,
-        text: enteredText,
-        creationDate: createdDate,
-        expirationDate: expiringDate
-      });
+      state.todos = [
+        {
+          id: id,
+          done: false,
+          text: enteredText,
+          creationDate: createdDate,
+          expirationDate: expiringDate
+        },
+        ...state.todos
+      ];
     },
     removeTodo: (state, action) => {
       state.todos = state.todos.filter((el) => el.id !== action.payload);
+    },
+    removeCompleted: (state) => {
+      state.todos = state.todos.filter((el) => !el.done);
     },
     toggleTodo: (state, action) => {
       const todoIndex = state.todos.findIndex((el) => el.id === action.payload);
@@ -62,6 +79,9 @@ const todosSlice = createSlice({
       todo.text = enteredText;
       todo.creationDate = createdDate;
       todo.expirationDate = expiringDate;
+    },
+    filterBy: (state, action) => {
+      state.filterBy = action.payload;
     }
   }
 });

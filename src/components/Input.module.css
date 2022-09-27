@@ -14,16 +14,28 @@
   font-size: 1.5rem;
   border-radius: 4px;
   border: none;
-  border-bottom: 2px solid #2a6b6a;
+  border-bottom: 2px solid #549998;
   background-color: #f7f5ef;
 }
 
 .input:focus {
-  outline: 2px solid #2a6b6a;
+  outline: none;
+  border-bottom: 2px solid #2a6b6a;
 }
 
-.button {
+.plus {
   font-size: 1.5rem;
-  padding: 0 0.95rem;
+  padding: 0 0.93rem;
   margin-left: 0.5rem;
+}
+
+.sort {
+  margin-right: 0.5rem;
+  padding: 0 0.85rem;
+  background-color: #f7f5ef;
+  color: #2a6b6a;
+}
+
+.sort:hover {
+  background-color: #f7f5ef;
 }

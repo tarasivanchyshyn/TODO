@@ -1,8 +1,10 @@
 import { useState, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
 
-import { todosActions } from '../store/store';
+import { filters, todosActions } from '../store/store';
 import Button from './Button';
 
 import classes from './Input.module.css';
@@ -29,11 +31,15 @@ function Input(props: InputProps) {
       return;
     }
     dispatch(todosActions.addTodo({ enteredText, id: uuidv4() }));
+    dispatch(todosActions.filterBy(filters.ALL));
     setEnteredText('');
   }
 
   return (
     <form onSubmit={submitHandler} className={classes.form}>
+      <Button className={classes.sort}>
+        <FontAwesomeIcon icon={faArrowDownShortWide} />
+      </Button>
       <input
         className={classes.input}
         type="text"
@@ -41,7 +47,7 @@ function Input(props: InputProps) {
         value={enteredText}
         onChange={inputChangeHandler}
       />
-      <Button className={classes.button} onClick={props.onOpenCreateTodoModal}>
+      <Button className={classes.plus} onClick={props.onOpenCreateTodoModal}>
         +
       </Button>
     </form>

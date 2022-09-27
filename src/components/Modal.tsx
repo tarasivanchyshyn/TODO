@@ -6,7 +6,7 @@ import { format, isBefore, isEqual } from 'date-fns';
 
 import formatDateString from '../helpers/formatDateString';
 import { dateFormat } from '../constants';
-import { todosActions, TodosState } from '../store/store';
+import { filters, todosActions, TodosState } from '../store/store';
 import Button from './Button';
 import ErrorModal from './ErrorModal';
 
@@ -78,6 +78,7 @@ function ModalOverlay(props: UniversalProps) {
           expiringDate
         })
       );
+      dispatch(todosActions.filterBy(filters.ALL));
     }
 
     props.onClose();

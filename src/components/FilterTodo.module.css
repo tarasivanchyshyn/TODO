@@ -1,0 +1,14 @@
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions button {
+  margin-left: 0.4rem;
+  padding: 0.3rem 0.7rem;
+}
+
+.actions svg {
+  margin-right: 0.45rem;
+}
