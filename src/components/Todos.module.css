@@ -2,8 +2,21 @@
   width: 90%;
   max-width: 40rem;
   margin: 2rem auto;
+}
+
+.list {
+  max-height: 65vh;
   padding: 0;
   list-style: none;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  border-bottom: 2px solid #479796;
+  margin-bottom: 0.5rem;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
 }
 
 .message {
@@ -11,4 +24,8 @@
   font-size: 1.3rem;
   margin-top: 3rem;
   color: gray;
+}
+
+.noitems {
+  text-align: center;
 }

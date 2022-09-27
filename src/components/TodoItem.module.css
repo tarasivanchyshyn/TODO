@@ -7,6 +7,8 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   padding: 1rem;
   background-color: #f7f5ef;
+  border-radius: 12px;
+  animation: slide-right 400ms ease-out forwards;
 }
 
 .input {
@@ -84,4 +86,15 @@
 .crossed {
   text-decoration: line-through;
   color: lightgray;
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translate(-5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0);
+  }
 }
