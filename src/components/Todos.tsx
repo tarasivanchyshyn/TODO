@@ -11,6 +11,7 @@ const Todos = () => {
   const filter = useSelector((state: TodosState) => state.filterBy);
 
   let content = <p className={classes.message}>No todos yet</p>;
+  let message = <p className={classes.noitems}>No items</p>;
 
   const filterTodo = () => {
     if (filter === filters.COMPLETED) {
@@ -22,14 +23,17 @@ const Todos = () => {
     return items;
   };
 
+  const filteredItems =
+    filterTodo().length <= 0
+      ? message
+      : filterTodo().map((item) => (
+          <TodoItem key={item.id} item={item}></TodoItem>
+        ));
+
   if (items.length) {
     content = (
       <div className={classes.todos}>
-        <ul className={classes.list}>
-          {filterTodo().map((item) => (
-            <TodoItem key={item.id} item={item}></TodoItem>
-          ))}
-        </ul>
+        <ul className={classes.list}>{filteredItems}</ul>
         <FilterTodo />
       </div>
     );

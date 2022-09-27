@@ -12,3 +12,8 @@
 .actions svg {
   margin-right: 0.45rem;
 }
+
+.message {
+  text-align: center;
+  color: tomato;
+}
