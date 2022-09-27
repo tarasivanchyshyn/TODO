@@ -36,6 +36,7 @@
   color: #2a6b6a;
 }
 
-.sort:hover {
+.sort:hover,
+.sort:focus {
   background-color: #f7f5ef;
 }
