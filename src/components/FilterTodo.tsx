@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faList,
@@ -9,13 +9,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
-import { filters, todosActions } from '../store/store';
+import { filters, todosActions, TodosState } from '../store/store';
 import classes from './FilterTodo.module.css';
 
 function FilterTodo() {
   const dispatch = useDispatch();
   const ref = useRef<HTMLButtonElement>(null);
   const [msgIsShown, setMessageIsShown] = useState(false);
+
+  const items = useSelector((state: TodosState) => state.todos);
 
   const { filterBy, removeCompleted } = todosActions;
   const { ALL, ACTIVE, COMPLETED } = filters;
@@ -24,6 +26,8 @@ function FilterTodo() {
     dispatch(filterBy(chosenFilter));
 
   const deleteCompletedHandler = () => {
+    if (items.every((el) => !el.done)) return;
+
     dispatch(removeCompleted());
     ref.current!.focus();
     setMessageIsShown(true);
@@ -32,10 +36,14 @@ function FilterTodo() {
     }, 2000);
   };
 
+  const { message, visible, hidden, actions } = classes;
+
   return (
     <>
-      {msgIsShown && <p className={classes.message}>Items deleted!</p>}
-      <div className={classes.actions}>
+      <p className={`${message} ${msgIsShown ? visible : hidden}`}>
+        Items deleted!
+      </p>
+      <div className={actions}>
         <Button onClick={() => filterHandler(ALL)} ref={ref}>
           <FontAwesomeIcon icon={faList} />
           All

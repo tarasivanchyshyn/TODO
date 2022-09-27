@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
+import { useMemo } from 'react';
 
-import { filters, TodosState } from '../store/store';
 import TodoItem from './TodoItem';
 import FilterTodo from './FilterTodo';
+import { filters, TodosState } from '../store/store';
 
 import classes from './Todos.module.css';
-import { useMemo } from 'react';
 
 const Todos = () => {
   const items = useSelector((state: TodosState) => state.todos);
