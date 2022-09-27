@@ -18,10 +18,11 @@ function FilterTodo() {
   const [msgIsShown, setMessageIsShown] = useState(false);
 
   const { filterBy, removeCompleted } = todosActions;
+  const { ALL, ACTIVE, COMPLETED } = filters;
 
-  const showAllHandler = () => dispatch(filterBy(filters.ALL));
-  const showActiveHandler = () => dispatch(filterBy(filters.ACTIVE));
-  const showCompletedHandler = () => dispatch(filterBy(filters.COMPLETED));
+  const filterHandler = (chosenFilter: string) =>
+    dispatch(filterBy(chosenFilter));
+
   const deleteCompletedHandler = () => {
     dispatch(removeCompleted());
     ref.current!.focus();
@@ -35,15 +36,15 @@ function FilterTodo() {
     <>
       {msgIsShown && <p className={classes.message}>Items deleted!</p>}
       <div className={classes.actions}>
-        <Button onClick={showAllHandler} ref={ref}>
+        <Button onClick={() => filterHandler(ALL)} ref={ref}>
           <FontAwesomeIcon icon={faList} />
           All
         </Button>
-        <Button onClick={showActiveHandler}>
+        <Button onClick={() => filterHandler(ACTIVE)}>
           <FontAwesomeIcon icon={faSpinner} />
           Active
         </Button>
-        <Button onClick={showCompletedHandler}>
+        <Button onClick={() => filterHandler(COMPLETED)}>
           <FontAwesomeIcon icon={faSquareCheck} />
           Completed
         </Button>
