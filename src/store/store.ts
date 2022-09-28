@@ -2,7 +2,12 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { format } from 'date-fns';
 
 import { dateFormat } from '../constants';
-import { compareText, compareDate } from '../helpers/compareFunctions';
+import {
+  compareTextAscend,
+  compareTextDescend,
+  compareDateAscend,
+  compareDateDescend
+} from '../helpers/compareFunctions';
 
 export const filters = {
   ALL: 'ALL',
@@ -85,11 +90,20 @@ const todosSlice = createSlice({
       state.filterBy = action.payload;
     },
     sortBy: (state, action) => {
-      if (action.payload === 'text') {
-        state.todos = state.todos.sort(compareText);
-      }
-      if (action.payload === 'date') {
-        state.todos = state.todos.sort(compareDate);
+      const { type, order } = action.payload;
+      let todos = state.todos;
+
+      switch (type) {
+        case 'text':
+          order === 'ascend'
+            ? (todos = todos.sort(compareTextAscend))
+            : (todos = todos.sort(compareTextDescend));
+          break;
+        case 'date':
+          order === 'ascend'
+            ? (todos = todos.sort(compareDateAscend))
+            : (todos = todos.sort(compareDateDescend));
+          break;
       }
     }
   }

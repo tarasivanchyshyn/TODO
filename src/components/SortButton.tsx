@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowDownShortWide,
+  faSortDown,
+  faSortUp
+} from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
+import { todosActions } from '../store/store';
 
 import classes from './SortButton.module.css';
-import { todosActions } from '../store/store';
 
 function SortButton() {
   const dispatch = useDispatch();
@@ -25,29 +29,54 @@ function SortButton() {
     };
   });
 
-  const sortByDateHandler = () => {
-    dispatch(todosActions.sortBy('date'));
+  const sortByDateHandler = (order: string) => {
+    dispatch(todosActions.sortBy({ type: 'date', order: order }));
     setOpen(false);
   };
-  const sortByTextHandler = () => {
-    dispatch(todosActions.sortBy('text'));
+  const sortByTextHandler = (order: string) => {
+    dispatch(todosActions.sortBy({ type: 'text', order: order }));
     setOpen(false);
   };
 
+  const { sort, dropdown, dropdownHeader, dropdownList, dropdownItem, sortUp } =
+    classes;
+
   return (
     <div ref={ref}>
-      <Button className={classes.sort} onClick={() => setOpen(!open)}>
+      <Button className={sort} onClick={() => setOpen(!open)}>
         <FontAwesomeIcon icon={faArrowDownShortWide} />
       </Button>
       {open && (
-        <div className={classes.dropdown}>
-          <p className={classes.dropdownHeader}>Sort by:</p>
-          <ul className={classes.dropdownList}>
-            <li className={classes.dropdownItem} onClick={sortByDateHandler}>
+        <div className={dropdown}>
+          <p className={dropdownHeader}>Sort by:</p>
+          <ul className={dropdownList}>
+            <li
+              className={`${dropdownItem} ${sortUp}`}
+              onClick={() => sortByDateHandler('ascend')}
+            >
               Date
+              <FontAwesomeIcon icon={faSortUp} />
             </li>
-            <li className={classes.dropdownItem} onClick={sortByTextHandler}>
+            <li
+              className={dropdownItem}
+              onClick={() => sortByDateHandler('descend')}
+            >
+              Date
+              <FontAwesomeIcon icon={faSortDown} />
+            </li>
+            <li
+              className={`${dropdownItem} ${sortUp}`}
+              onClick={() => sortByTextHandler('ascend')}
+            >
               Text
+              <FontAwesomeIcon icon={faSortUp} />
+            </li>
+            <li
+              className={dropdownItem}
+              onClick={() => sortByTextHandler('descend')}
+            >
+              Text
+              <FontAwesomeIcon icon={faSortDown} />
             </li>
           </ul>
         </div>
