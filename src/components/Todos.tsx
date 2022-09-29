@@ -8,8 +8,16 @@ import { filters, TodosState } from '../store/store';
 import classes from './Todos.module.css';
 
 const Todos = () => {
-  const items = useSelector((state: TodosState) => state.todos);
+  let items = useSelector((state: TodosState) => state.todos);
   const filter = useSelector((state: TodosState) => state.filterBy);
+
+  const searchValue = useSelector((state: TodosState) => state.searchedValue);
+
+  if (searchValue.trim().length) {
+    items = items.filter((el) =>
+      el.text.toLowerCase().includes(searchValue.toLowerCase())
+    );
+  }
 
   const filteredActive = useMemo(
     () => items.filter((item) => !item.done),

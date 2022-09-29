@@ -11,6 +11,10 @@
   animation: slide-right 400ms ease-out forwards;
 }
 
+.item:first-child {
+  margin-top: 0;
+}
+
 .input {
   width: 1.5rem;
   height: 1.5rem;

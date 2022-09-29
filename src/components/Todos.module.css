@@ -1,7 +1,7 @@
 .todos {
   width: 90%;
   max-width: 40rem;
-  margin: 2rem auto;
+  margin: 0 auto;
 }
 
 .list {
@@ -12,7 +12,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
   border-bottom: 2px solid #479796;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0 0.5rem 0;
 }
 
 .list::-webkit-scrollbar {
