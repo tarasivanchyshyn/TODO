@@ -3,6 +3,7 @@ import { useRef, useState, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { format, isBefore, isEqual } from 'date-fns';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 import formatDateString from '../helpers/formatDateString';
 import { dateFormat } from '../constants';
@@ -60,25 +61,29 @@ function ModalOverlay(props: UniversalProps) {
     const createdDate: string = format(enteredCreatedDateObj, dateFormat);
     const expiringDate: string = format(enteredExpirationDateObj, dateFormat);
 
+    const { updateTodo, setIcon, addTodoFromModal, filterBy } = todosActions;
+
     if (todo) {
       dispatch(
-        todosActions.updateTodo({
+        updateTodo({
           id: todo.id,
           enteredText,
           createdDate,
           expiringDate
         })
       );
+      dispatch(setIcon(faSort));
     } else {
       dispatch(
-        todosActions.addTodoFromModal({
+        addTodoFromModal({
           id: uuidv4(),
           enteredText,
           createdDate,
           expiringDate
         })
       );
-      dispatch(todosActions.filterBy(filters.ALL));
+      dispatch(filterBy(filters.ALL));
+      dispatch(setIcon(faSort));
     }
 
     props.onClose();

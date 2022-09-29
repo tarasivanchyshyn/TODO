@@ -1,11 +1,11 @@
 import { useState, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 
-import { filters, todosActions } from '../store/store';
 import Button from './Button';
+import SortButton from './SortButton';
+import { filters, todosActions } from '../store/store';
 
 import classes from './Input.module.css';
 
@@ -32,14 +32,13 @@ function Input(props: InputProps) {
     }
     dispatch(todosActions.addTodo({ enteredText, id: uuidv4() }));
     dispatch(todosActions.filterBy(filters.ALL));
+    dispatch(todosActions.setIcon(faSort));
     setEnteredText('');
   }
 
   return (
     <form onSubmit={submitHandler} className={classes.form}>
-      <Button className={classes.sort}>
-        <FontAwesomeIcon icon={faArrowDownShortWide} />
-      </Button>
+      <SortButton />
       <input
         className={classes.input}
         type="text"

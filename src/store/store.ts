@@ -1,7 +1,15 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { format } from 'date-fns';
+import { faSort, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-import { dateFormat } from '../constants';
+import { dateFormat, ascendOrder } from '../constants';
+import { dateSortOption, textSortOption } from '../constants';
+import {
+  compareTextAscend,
+  compareTextDescend,
+  compareDateAscend,
+  compareDateDescend
+} from '../helpers/compareFunctions';
 
 export const filters = {
   ALL: 'ALL',
@@ -20,11 +28,13 @@ export interface Todo {
 export interface TodosState {
   todos: Todo[];
   filterBy: string;
+  sortIcon: IconDefinition;
 }
 
 const initialState: TodosState = {
   todos: [],
-  filterBy: filters.ALL
+  filterBy: filters.ALL,
+  sortIcon: faSort
 };
 
 const todosSlice = createSlice({
@@ -82,6 +92,26 @@ const todosSlice = createSlice({
     },
     filterBy: (state, action) => {
       state.filterBy = action.payload;
+    },
+    sortBy: (state, action) => {
+      const { type, order } = action.payload;
+      let todos = state.todos;
+
+      switch (type) {
+        case textSortOption:
+          order === ascendOrder
+            ? (todos = todos.sort(compareTextAscend))
+            : (todos = todos.sort(compareTextDescend));
+          break;
+        case dateSortOption:
+          order === ascendOrder
+            ? (todos = todos.sort(compareDateAscend))
+            : (todos = todos.sort(compareDateDescend));
+          break;
+      }
+    },
+    setIcon: (state, action) => {
+      state.sortIcon = action.payload;
     }
   }
 });
