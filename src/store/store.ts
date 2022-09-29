@@ -29,12 +29,14 @@ export interface TodosState {
   todos: Todo[];
   filterBy: string;
   sortIcon: IconDefinition;
+  searchedValue: string;
 }
 
 const initialState: TodosState = {
   todos: [],
   filterBy: filters.ALL,
-  sortIcon: faSort
+  sortIcon: faSort,
+  searchedValue: ''
 };
 
 const todosSlice = createSlice({
@@ -112,6 +114,9 @@ const todosSlice = createSlice({
     },
     setIcon: (state, action) => {
       state.sortIcon = action.payload;
+    },
+    search: (state, action) => {
+      state.searchedValue = action.payload;
     }
   }
 });
