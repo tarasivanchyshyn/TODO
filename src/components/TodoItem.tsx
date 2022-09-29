@@ -4,11 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-import { todosActions } from '../store/todosSlice';
-import { Todo } from '../store/todosSlice';
-
-import classes from './TodoItem.module.css';
 import Modal from './Modal';
+import { todosActions, Todo } from '../store/todosSlice';
+
+import classes from './TodoItem.module.scss';
 
 type TodoItemProps = {
   children?: ReactNode;

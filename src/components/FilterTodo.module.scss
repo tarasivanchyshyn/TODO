@@ -1,7 +1,7 @@
+@import '../variables.scss';
+
 .actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center;
 }
 
 .actions button {
@@ -16,7 +16,7 @@
 .message {
   margin: 0 0 0.5rem 0;
   text-align: center;
-  color: tomato;
+  color: $color-clear-msg;
 }
 
 .visible {

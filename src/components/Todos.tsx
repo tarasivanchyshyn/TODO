@@ -4,9 +4,9 @@ import { useMemo } from 'react';
 import TodoItem from './TodoItem';
 import FilterTodo from './FilterTodo';
 import { filters } from '../store/todosSlice';
-
-import classes from './Todos.module.css';
 import { RootState } from '../store/store';
+
+import classes from './Todos.module.scss';
 
 const Todos = () => {
   let items = useSelector((state: RootState) => state.todos.todos);

@@ -1,8 +1,10 @@
+@import '../variables.scss';
+
 .sort {
   margin-right: 0.5rem;
   padding: 0;
-  background-color: #f7f5ef;
-  color: #2a6b6a;
+  background: $color-secondary;
+  color: $color-primary-dark;
   height: 100%;
   width: 3rem;
   font-size: 1.3rem;
@@ -10,22 +12,21 @@
 
 .sort:hover,
 .sort:focus {
-  background-color: #f7f5ef;
+  background: $color-secondary;
 }
 
 .dropdown {
   position: absolute;
   top: 4rem;
   width: 7rem;
-  display: flex;
-  flex-direction: column;
-  background-color: #f7f5ef;
-  border: 2px solid #3a9190;
+  @include flex-column;
+  @include bg-2nd;
+  @include border;
+  @include border-r;
   border-top: none;
-  border-radius: 4px;
   z-index: 100;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 20%);
-  animation: slide-down 300ms ease-out forwards;
+  @include shadow;
+  @include animation;
 }
 
 .dropdown::before {
@@ -35,26 +36,25 @@
   left: 0.85rem;
   height: 1rem;
   width: 1rem;
-  background-color: #f7f5ef;
+  @include bg-2nd;
   transform: rotate(45deg);
-  z-index: 110;
 }
 
 .dropdownHeader {
   margin: 0.3rem 0 0 0;
   padding-left: 0.5rem;
   height: 1.7rem;
-  color: #555555;
+  color: $color-dark-grey;
   cursor: default;
   font-weight: 500;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid $color-light-gray;
 }
 
 .dropdownList {
   list-style: none;
   margin: 0;
   padding: 0;
-  background-color: #f7f5ef;
+  @include bg-2nd;
 }
 
 .dropdownItem {
@@ -62,19 +62,18 @@
   height: 1.7rem;
   width: 100%;
   cursor: pointer;
-  display: flex;
+  @include flex-Ycenter;
   justify-content: space-between;
-  align-items: center;
 }
 
 .dropdownItem:hover {
-  background-color: #3a9190;
+  background: $color-primary;
   color: white;
 }
 
 .dropdownItem svg {
   margin: 0 1rem 0.3rem 0;
-  color: grey;
+  color: $color-dark-grey;
 }
 
 .dropdownItem:hover svg {

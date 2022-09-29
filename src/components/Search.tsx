@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-import classes from './Search.module.css';
 import { todosActions } from '../store/todosSlice';
+import classes from './Search.module.scss';
 
 function Search() {
   const [searchValue, setSearchValue] = useState('');

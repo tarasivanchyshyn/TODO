@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 
 import Button from './Button';
 import { defaultErrorTitle, defaultErrorMessage } from '../constants';
-import classes from './ErrorModal.module.css';
+import classes from './ErrorModal.module.scss';
 
 type UniversalProps = {
   title?: string;

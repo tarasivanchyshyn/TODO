@@ -1,6 +1,8 @@
+@import '../variables.scss';
+
 .header {
   text-align: center;
-  color: #3a9190;
+  color: $color-primary;
   font-weight: 900;
   text-shadow: 1px 1px 2px #adadad;
   cursor: default;

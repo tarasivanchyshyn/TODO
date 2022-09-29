@@ -10,8 +10,9 @@ import {
 
 import Button from './Button';
 import { filters, todosActions } from '../store/todosSlice';
-import classes from './FilterTodo.module.css';
 import { RootState } from '../store/store';
+
+import classes from './FilterTodo.module.scss';
 
 function FilterTodo() {
   const dispatch = useDispatch();

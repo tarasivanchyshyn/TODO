@@ -1,29 +1,15 @@
+@import '../variables.scss';
+
 .backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 20;
-  background-color: rgba(0, 0, 0, 0.75);
+  @include backdrop;
 }
 
 .modal {
-  position: absolute;
-  width: 90%;
+  @include modal;
   max-width: 40rem;
-  top: 50%;
-  left: 50%;
   transform: translate(-50%, -90%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  border-radius: 14px;
-  background-color: white;
   box-shadow: 0 10px 12px rgba(0, 0, 0, 0.25);
   z-index: 30;
-  animation: slide-down 300ms ease-out forwards;
 }
 
 .header {
@@ -31,35 +17,32 @@
   margin: 0 0 0.4rem 0;
   text-align: center;
   font-size: 1.3rem;
-  color: #3a9190;
+  color: $color-primary;
 }
 
 .form {
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   align-items: center;
 }
 
 .control {
   width: 70%;
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   margin-bottom: 1.1rem;
 }
 
 .label {
   margin: 0 0 0.2rem 0.4rem;
   font-weight: 500;
-  color: #3a9190;
+  color: $color-primary;
 }
 
 .input {
   padding: 0.5rem;
   font-size: 1rem;
-  border-radius: 4px;
-  border: none;
-  outline: 1px solid #858585;
+  @include border-r;
+  @include input-outline;
 }
 
 input::-webkit-calendar-picker-indicator {
@@ -67,9 +50,8 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .input:focus {
-  outline: 1px solid #858585;
-  border: none;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+  @include input-outline;
+  @include shadow;
 }
 
 .actions {
@@ -83,14 +65,14 @@ input::-webkit-calendar-picker-indicator {
 }
 
 .cancel {
-  background-color: white;
-  color: #3a9190;
+  background: white;
+  color: $color-primary;
 }
 
 .cancel:hover,
 .cancel:active {
-  background-color: white;
-  color: #163d3d;
+  background: white;
+  color: $color-cancel-2nd;
 }
 
 @keyframes slide-down {

@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 .form {
   display: flex;
   width: 90%;
@@ -13,10 +15,10 @@
   padding: 0.5rem;
   font: inherit;
   font-size: 1.5rem;
-  border-radius: 4px;
+  @include border-r;
   border: none;
   border-bottom: 2px solid #549998;
-  background-color: #f7f5ef;
+  @include bg-2nd;
 }
 
 .input:focus {

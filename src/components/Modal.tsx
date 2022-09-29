@@ -10,9 +10,9 @@ import { dateFormat } from '../constants';
 import { filters, todosActions } from '../store/todosSlice';
 import Button from './Button';
 import ErrorModal from './ErrorModal';
-
-import classes from './Modal.module.css';
 import { RootState } from '../store/store';
+
+import classes from './Modal.module.scss';
 
 type UniversalProps = {
   onClose: () => void;

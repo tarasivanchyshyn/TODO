@@ -1,3 +1,5 @@
+@import '../variables.scss';
+
 .form {
   display: flex;
   justify-content: center;
@@ -11,9 +13,9 @@
   padding: 0.4rem 0.5rem 0.3rem 1.9rem;
   width: 100%;
   font-size: 1rem;
-  color: grey;
-  border: 1px solid lightgray;
-  border-radius: 4px;
+  color: $color-dark-grey;
+  border: 1px solid $color-light-gray;
+  @include border-r;
   outline: none;
 }
 
@@ -26,7 +28,7 @@
   left: 0.6rem;
   top: 0.5rem;
   font-size: 0.9rem;
-  color: grey;
+  color: $color-glass;
 }
 
 .input::-webkit-search-cancel-button:hover {

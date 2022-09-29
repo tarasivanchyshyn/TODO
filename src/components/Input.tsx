@@ -7,7 +7,7 @@ import Button from './Button';
 import SortButton from './SortButton';
 import { filters, todosActions } from '../store/todosSlice';
 
-import classes from './Input.module.css';
+import classes from './Input.module.scss';
 
 type InputProps = {
   onOpenCreateTodoModal: () => void;
