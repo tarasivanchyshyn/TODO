@@ -5,7 +5,7 @@ import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
 import SortButton from './SortButton';
-import { filters, todosActions } from '../store/store';
+import { filters, todosActions } from '../store/todosSlice';
 
 import classes from './Input.module.css';
 

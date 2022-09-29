@@ -7,11 +7,12 @@ import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 import formatDateString from '../helpers/formatDateString';
 import { dateFormat } from '../constants';
-import { filters, todosActions, TodosState } from '../store/store';
+import { filters, todosActions } from '../store/todosSlice';
 import Button from './Button';
 import ErrorModal from './ErrorModal';
 
 import classes from './Modal.module.css';
+import { RootState } from '../store/store';
 
 type UniversalProps = {
   onClose: () => void;
@@ -30,7 +31,7 @@ function ModalOverlay(props: UniversalProps) {
 
   const [dateError, setDateError] = useState(false);
 
-  const todos = useSelector((state: TodosState) => state.todos);
+  const todos = useSelector((state: RootState) => state.todos.todos);
   const todo = todos.find((el) => el.id === props.id);
 
   function submitHandler(event: FormEvent) {

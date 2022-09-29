@@ -3,17 +3,19 @@ import { useMemo } from 'react';
 
 import TodoItem from './TodoItem';
 import FilterTodo from './FilterTodo';
-import { filters, TodosState } from '../store/store';
+import { filters } from '../store/todosSlice';
 
 import classes from './Todos.module.css';
+import { RootState } from '../store/store';
 
 const Todos = () => {
-  let items = useSelector((state: TodosState) => state.todos);
-  const filter = useSelector((state: TodosState) => state.filterBy);
+  let items = useSelector((state: RootState) => state.todos.todos);
+  const filter = useSelector((state: RootState) => state.todos.filterBy);
+  const searchValue = useSelector(
+    (state: RootState) => state.todos.searchedValue
+  );
 
-  const searchValue = useSelector((state: TodosState) => state.searchedValue);
-
-  if (searchValue.trim().length) {
+  if (searchValue && searchValue.trim().length) {
     items = items.filter((el) =>
       el.text.toLowerCase().includes(searchValue.toLowerCase())
     );

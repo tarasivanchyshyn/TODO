@@ -7,17 +7,18 @@ import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
 import { faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
-import { todosActions, TodosState } from '../store/store';
+import { todosActions } from '../store/todosSlice';
 import { dateSortOption, textSortOption } from '../constants';
 import { ascendOrder, descendOrder } from '../constants';
 
 import classes from './SortButton.module.css';
+import { RootState } from '../store/store';
 
 function SortButton() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const icon = useSelector((state: TodosState) => state.sortIcon);
+  const icon = useSelector((state: RootState) => state.todos.sortIcon);
 
   const toggleSortWindow = () => setOpen(!open);
 

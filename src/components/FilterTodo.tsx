@@ -9,15 +9,16 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
-import { filters, todosActions, TodosState } from '../store/store';
+import { filters, todosActions } from '../store/todosSlice';
 import classes from './FilterTodo.module.css';
+import { RootState } from '../store/store';
 
 function FilterTodo() {
   const dispatch = useDispatch();
   const ref = useRef<HTMLButtonElement>(null);
   const [msgIsShown, setMessageIsShown] = useState(false);
 
-  const items = useSelector((state: TodosState) => state.todos);
+  const items = useSelector((state: RootState) => state.todos.todos);
 
   const { filterBy, removeCompleted } = todosActions;
   const { ALL, ACTIVE, COMPLETED } = filters;

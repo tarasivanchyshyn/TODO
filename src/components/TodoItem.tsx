@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-import { todosActions } from '../store/store';
-import { Todo } from '../store/store';
+import { todosActions } from '../store/todosSlice';
+import { Todo } from '../store/todosSlice';
 
 import classes from './TodoItem.module.css';
 import Modal from './Modal';

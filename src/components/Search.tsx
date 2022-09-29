@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import classes from './Search.module.css';
-import { todosActions } from '../store/store';
+import { todosActions } from '../store/todosSlice';
 
 function Search() {
   const [searchValue, setSearchValue] = useState('');
