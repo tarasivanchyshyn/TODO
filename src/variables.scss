@@ -1,14 +1,16 @@
 $color-primary: #3a9190;
 $color-primary-dark: #2a6b6a;
 $color-secondary: #f7f5ef;
+
 $color-pencil: #4c8180;
 $color-cross: #b63b3b;
 $color-cross-2nd: #b63b3b;
+$color-glass: grey;
+
 $color-clear-msg: #b63b3b;
 $color-cancel-2nd: #163d3d;
 $color-light-gray: lightgray;
 $color-dark-grey: grey;
-$color-glass: $color-dark-grey;
 
 @mixin border {
   border: 2px solid $color-primary;

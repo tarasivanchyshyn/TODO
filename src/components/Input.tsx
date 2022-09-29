@@ -6,6 +6,7 @@ import { faSort } from '@fortawesome/free-solid-svg-icons';
 import Button from './Button';
 import SortButton from './SortButton';
 import { filters, todosActions } from '../store/todosSlice';
+import { inputPlaceholder } from '../constants';
 
 import classes from './Input.module.scss';
 
@@ -27,7 +28,7 @@ function Input(props: InputProps) {
 
   function submitHandler(event: FormEvent) {
     event.preventDefault();
-    if (enteredText.trim().length === 0) {
+    if (!enteredText.trim().length) {
       return;
     }
     dispatch(todosActions.addTodo({ enteredText, id: uuidv4() }));
@@ -42,7 +43,7 @@ function Input(props: InputProps) {
       <input
         className={classes.input}
         type="text"
-        placeholder="Enter todo text"
+        placeholder={inputPlaceholder}
         value={enteredText}
         onChange={inputChangeHandler}
       />

@@ -1,12 +1,8 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faList,
-  faSpinner,
-  faSquareCheck,
-  faTrash
-} from '@fortawesome/free-solid-svg-icons';
+import { faList, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSquareCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
 import { filters, todosActions } from '../store/todosSlice';
@@ -18,7 +14,6 @@ function FilterTodo() {
   const dispatch = useDispatch();
   const ref = useRef<HTMLButtonElement>(null);
   const [msgIsShown, setMessageIsShown] = useState(false);
-
   const items = useSelector((state: RootState) => state.todos.todos);
 
   const { filterBy, removeCompleted } = todosActions;

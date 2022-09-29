@@ -5,11 +5,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { format, isBefore, isEqual } from 'date-fns';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
-import formatDateString from '../helpers/formatDateString';
-import { dateFormat } from '../constants';
-import { filters, todosActions } from '../store/todosSlice';
 import Button from './Button';
 import ErrorModal from './ErrorModal';
+import formatDateString from '../helpers/formatDateString';
+import { dateFormat, inputPlaceholder } from '../constants';
+import { filters, todosActions } from '../store/todosSlice';
 import { RootState } from '../store/store';
 
 import classes from './Modal.module.scss';
@@ -30,8 +30,8 @@ function ModalOverlay(props: UniversalProps) {
   const dispatch = useDispatch();
 
   const [dateError, setDateError] = useState(false);
-
   const todos = useSelector((state: RootState) => state.todos.todos);
+
   const todo = todos.find((el) => el.id === props.id);
 
   function submitHandler(event: FormEvent) {
@@ -41,7 +41,7 @@ function ModalOverlay(props: UniversalProps) {
     const enteredExpirationDate = todoExpirationtRef.current!.value;
 
     if (
-      enteredText.trim().length === 0 ||
+      !enteredText.trim().length ||
       !enteredCreatedDate ||
       !enteredExpirationDate
     ) {
@@ -59,8 +59,8 @@ function ModalOverlay(props: UniversalProps) {
       return;
     }
 
-    const createdDate: string = format(enteredCreatedDateObj, dateFormat);
-    const expiringDate: string = format(enteredExpirationDateObj, dateFormat);
+    const createdDate = format(enteredCreatedDateObj, dateFormat);
+    const expiringDate = format(enteredExpirationDateObj, dateFormat);
 
     const { updateTodo, setIcon, addTodoFromModal, filterBy } = todosActions;
 
@@ -112,7 +112,7 @@ function ModalOverlay(props: UniversalProps) {
               type="text"
               className={input}
               id="text"
-              placeholder="Enter todo text"
+              placeholder={inputPlaceholder}
               required
             />
           </div>

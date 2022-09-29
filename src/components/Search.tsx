@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import { todosActions } from '../store/todosSlice';
+import { searchPlaceholder } from '../constants';
+
 import classes from './Search.module.scss';
 
 function Search() {
@@ -28,7 +30,7 @@ function Search() {
       <input
         className={classes.input}
         type="search"
-        placeholder="Search for todos"
+        placeholder={searchPlaceholder}
         onChange={inputChangeHandler}
       ></input>
       <FontAwesomeIcon icon={faMagnifyingGlass} />

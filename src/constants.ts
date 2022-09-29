@@ -7,3 +7,6 @@ export const dateSortOption = 'date';
 export const textSortOption = 'text';
 export const ascendOrder = 'ascend';
 export const descendOrder = 'descend';
+
+export const inputPlaceholder = 'Enter todo text';
+export const searchPlaceholder = 'Search for todos';

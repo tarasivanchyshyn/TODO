@@ -15,7 +15,7 @@ const Todos = () => {
     (state: RootState) => state.todos.searchedValue
   );
 
-  if (searchValue && searchValue.trim().length) {
+  if (searchValue.trim().length) {
     items = items.filter((el) =>
       el.text.toLowerCase().includes(searchValue.toLowerCase())
     );
