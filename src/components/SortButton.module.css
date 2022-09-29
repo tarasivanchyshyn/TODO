@@ -1,9 +1,11 @@
 .sort {
   margin-right: 0.5rem;
-  padding: 0 0.85rem;
+  padding: 0;
   background-color: #f7f5ef;
   color: #2a6b6a;
   height: 100%;
+  width: 3rem;
+  font-size: 1.3rem;
 }
 
 .sort:hover,

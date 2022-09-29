@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowDownShortWide,
-  faSortDown,
-  faSortUp
-} from '@fortawesome/free-solid-svg-icons';
+import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownZA, faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
-import { todosActions } from '../store/store';
+import { todosActions, TodosState } from '../store/store';
+import { dateSortOption, textSortOption } from '../constants';
+import { ascendOrder, descendOrder } from '../constants';
 
 import classes from './SortButton.module.css';
 
@@ -16,6 +17,9 @@ function SortButton() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const icon = useSelector((state: TodosState) => state.sortIcon);
+
+  const toggleSortWindow = () => setOpen(!open);
 
   useEffect(() => {
     let handler = (e: any) => {
@@ -29,12 +33,20 @@ function SortButton() {
     };
   });
 
+  const { sortBy, setIcon } = todosActions;
+
   const sortByDateHandler = (order: string) => {
-    dispatch(todosActions.sortBy({ type: 'date', order: order }));
+    dispatch(sortBy({ type: dateSortOption, order: order }));
+    order === ascendOrder
+      ? dispatch(setIcon(faArrowUpShortWide))
+      : dispatch(setIcon(faArrowDownShortWide));
     setOpen(false);
   };
   const sortByTextHandler = (order: string) => {
-    dispatch(todosActions.sortBy({ type: 'text', order: order }));
+    dispatch(sortBy({ type: textSortOption, order: order }));
+    order === ascendOrder
+      ? dispatch(setIcon(faArrowUpAZ))
+      : dispatch(setIcon(faArrowDownZA));
     setOpen(false);
   };
 
@@ -43,8 +55,8 @@ function SortButton() {
 
   return (
     <div ref={ref}>
-      <Button className={sort} onClick={() => setOpen(!open)}>
-        <FontAwesomeIcon icon={faArrowDownShortWide} />
+      <Button className={sort} onClick={toggleSortWindow}>
+        <FontAwesomeIcon icon={icon} />
       </Button>
       {open && (
         <div className={dropdown}>
@@ -52,28 +64,28 @@ function SortButton() {
           <ul className={dropdownList}>
             <li
               className={`${dropdownItem} ${sortUp}`}
-              onClick={() => sortByDateHandler('ascend')}
+              onClick={() => sortByDateHandler(ascendOrder)}
             >
               Date
               <FontAwesomeIcon icon={faSortUp} />
             </li>
             <li
               className={dropdownItem}
-              onClick={() => sortByDateHandler('descend')}
+              onClick={() => sortByDateHandler(descendOrder)}
             >
               Date
               <FontAwesomeIcon icon={faSortDown} />
             </li>
             <li
               className={`${dropdownItem} ${sortUp}`}
-              onClick={() => sortByTextHandler('ascend')}
+              onClick={() => sortByTextHandler(ascendOrder)}
             >
               Text
               <FontAwesomeIcon icon={faSortUp} />
             </li>
             <li
               className={dropdownItem}
-              onClick={() => sortByTextHandler('descend')}
+              onClick={() => sortByTextHandler(descendOrder)}
             >
               Text
               <FontAwesomeIcon icon={faSortDown} />

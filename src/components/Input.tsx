@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
 import SortButton from './SortButton';
@@ -31,6 +32,7 @@ function Input(props: InputProps) {
     }
     dispatch(todosActions.addTodo({ enteredText, id: uuidv4() }));
     dispatch(todosActions.filterBy(filters.ALL));
+    dispatch(todosActions.setIcon(faSort));
     setEnteredText('');
   }
 
