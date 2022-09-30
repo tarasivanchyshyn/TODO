@@ -1,0 +1,87 @@
+@import '../../../variables.scss';
+
+.backdrop {
+  @include backdrop;
+}
+
+.modal {
+  @include modal;
+  max-width: 40rem;
+  transform: translate(-50%, -90%);
+  box-shadow: 0 10px 12px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+}
+
+.header {
+  width: 100%;
+  margin: 0 0 0.4rem 0;
+  text-align: center;
+  font-size: 1.3rem;
+  color: $color-primary;
+}
+
+.form {
+  width: 100%;
+  @include flex-column;
+  align-items: center;
+}
+
+.control {
+  width: 70%;
+  @include flex-column;
+  margin-bottom: 1rem;
+}
+
+.label {
+  margin: 0 0 0.2rem 0.3rem;
+  font-weight: 500;
+  color: $color-primary;
+}
+
+.input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  @include border-r;
+  @include input-outline;
+
+  &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+  }
+
+  &:focus {
+    @include input-outline;
+    @include shadow;
+  }
+}
+
+.actions {
+  align-self: flex-end;
+  margin-top: 0.5rem;
+}
+
+.btn {
+  align-self: flex-end;
+  margin-right: 1rem;
+}
+
+.cancel {
+  background: white;
+  color: $color-primary;
+
+  &:hover,
+  &:active {
+    background: white;
+    color: $color-cancel-2nd;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -140%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -90%);
+  }
+}

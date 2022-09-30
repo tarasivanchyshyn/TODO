@@ -5,13 +5,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { format, isBefore, isEqual } from 'date-fns';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
-import formatDateString from '../helpers/formatDateString';
-import { dateFormat } from '../constants';
-import { filters, todosActions, TodosState } from '../store/store';
-import Button from './Button';
-import ErrorModal from './ErrorModal';
+import Button from '../../UI/Button/Button';
+import ErrorModal from '../ErrorModal/ErrorModal';
+import formatDateString from '../../../helpers/formatDateString';
+import { dateFormat, inputPlaceholder } from '../../../constants';
+import { filters, todosActions } from '../../../store/todosSlice';
+import { RootState } from '../../../store/store';
 
-import classes from './Modal.module.css';
+import classes from './Modal.module.scss';
 
 type UniversalProps = {
   onClose: () => void;
@@ -29,8 +30,8 @@ function ModalOverlay(props: UniversalProps) {
   const dispatch = useDispatch();
 
   const [dateError, setDateError] = useState(false);
+  const todos = useSelector((state: RootState) => state.todos.todos);
 
-  const todos = useSelector((state: TodosState) => state.todos);
   const todo = todos.find((el) => el.id === props.id);
 
   function submitHandler(event: FormEvent) {
@@ -39,11 +40,7 @@ function ModalOverlay(props: UniversalProps) {
     const enteredCreatedDate = todoCreatedRef.current!.value;
     const enteredExpirationDate = todoExpirationtRef.current!.value;
 
-    if (
-      enteredText.trim().length === 0 ||
-      !enteredCreatedDate ||
-      !enteredExpirationDate
-    ) {
+    if (!enteredText.trim() || !enteredCreatedDate || !enteredExpirationDate) {
       return;
     }
 
@@ -58,8 +55,8 @@ function ModalOverlay(props: UniversalProps) {
       return;
     }
 
-    const createdDate: string = format(enteredCreatedDateObj, dateFormat);
-    const expiringDate: string = format(enteredExpirationDateObj, dateFormat);
+    const createdDate = format(enteredCreatedDateObj, dateFormat);
+    const expiringDate = format(enteredExpirationDateObj, dateFormat);
 
     const { updateTodo, setIcon, addTodoFromModal, filterBy } = todosActions;
 
@@ -111,7 +108,7 @@ function ModalOverlay(props: UniversalProps) {
               type="text"
               className={input}
               id="text"
-              placeholder="Enter todo text"
+              placeholder={inputPlaceholder}
               required
             />
           </div>

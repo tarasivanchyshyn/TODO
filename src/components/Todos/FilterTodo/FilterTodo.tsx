@@ -1,23 +1,20 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faList,
-  faSpinner,
-  faSquareCheck,
-  faTrash
-} from '@fortawesome/free-solid-svg-icons';
+import { faList, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSquareCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import Button from './Button';
-import { filters, todosActions, TodosState } from '../store/store';
-import classes from './FilterTodo.module.css';
+import Button from '../../UI/Button/Button';
+import { filters, todosActions } from '../../../store/todosSlice';
+import { RootState } from '../../../store/store';
+
+import classes from './FilterTodo.module.scss';
 
 function FilterTodo() {
   const dispatch = useDispatch();
   const ref = useRef<HTMLButtonElement>(null);
   const [msgIsShown, setMessageIsShown] = useState(false);
-
-  const items = useSelector((state: TodosState) => state.todos);
+  const items = useSelector((state: RootState) => state.todos.todos);
 
   const { filterBy, removeCompleted } = todosActions;
   const { ALL, ACTIVE, COMPLETED } = filters;
@@ -36,7 +33,7 @@ function FilterTodo() {
     }, 2000);
   };
 
-  const { message, visible, hidden, actions } = classes;
+  const { message, visible, hidden, actions, clear } = classes;
 
   return (
     <>
@@ -56,7 +53,7 @@ function FilterTodo() {
           <FontAwesomeIcon icon={faSquareCheck} />
           Completed
         </Button>
-        <Button onClick={deleteCompletedHandler}>
+        <Button onClick={deleteCompletedHandler} className={clear}>
           <FontAwesomeIcon icon={faTrash} />
           Clear completed
         </Button>

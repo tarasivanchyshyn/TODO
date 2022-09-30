@@ -1,0 +1,84 @@
+$color-primary: #3a9190;
+$color-primary-dark: #2a6b6a;
+$color-secondary: #f7f5ef;
+
+$color-pencil: #4c8180;
+$color-cross: #b63b3b;
+$color-cross-2nd: #e93434;
+$color-glass: grey;
+
+$color-clear-msg: #b63b3b;
+$color-cancel-2nd: #163d3d;
+$color-light-gray: lightgray;
+$color-dark-grey: grey;
+
+@mixin border {
+  border: 2px solid $color-primary;
+}
+
+@mixin bg-2nd {
+  background: $color-secondary;
+}
+
+@mixin btn-action {
+  background: #2a6b6a;
+  border: 2px solid #2a6b6a;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+@mixin backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+@mixin animation {
+  animation: slide-down 300ms ease-out forwards;
+}
+
+@mixin modal {
+  position: absolute;
+  width: 90%;
+  top: 50%;
+  left: 50%;
+  padding: 1rem;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  @include animation;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-Ycenter {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin input-outline {
+  border: none;
+  outline: 1px solid #858585;
+}
+
+@mixin shadow {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+@mixin border-r {
+  border-radius: 4px;
+}

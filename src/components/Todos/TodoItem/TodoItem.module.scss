@@ -1,30 +1,32 @@
+@import '../../../variables.scss';
+
 .item {
   width: 100%;
-  display: flex;
+  @include flex-Ycenter;
   justify-content: flex-start;
-  align-items: center;
   margin: 1rem 0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  @include shadow;
   padding: 1rem;
-  background-color: #f7f5ef;
+  @include bg-2nd;
   border-radius: 12px;
   animation: slide-right 400ms ease-out forwards;
-}
 
-.item:first-child {
-  margin-top: 0;
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .input {
   width: 1.5rem;
   height: 1.5rem;
   margin: 0 1rem 0 0;
-}
-.input:checked {
-  accent-color: #3a9190;
-}
-.input:hover {
-  cursor: pointer;
+
+  &:checked {
+    accent-color: $color-primary;
+  }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .txt {
@@ -38,16 +40,14 @@
   width: 30%;
   height: 100%;
   margin-left: auto;
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
 }
 
 .icons {
   width: 100%;
   height: 20%;
-  display: flex;
+  @include flex-Ycenter;
   justify-content: flex-end;
-  align-items: center;
 }
 
 .icon {
@@ -60,14 +60,15 @@
 
 .pencil {
   font-size: 1.3rem;
-  color: #4c8180;
+  color: $color-pencil;
 }
 
 .cross {
-  color: #b63b3b;
-}
-.cross:hover {
-  color: #ff3434;
+  color: $color-cross;
+
+  &:hover {
+    color: $color-cross-2nd;
+  }
 }
 
 .dates {
@@ -75,7 +76,7 @@
   height: 80%;
   font-size: 0.8rem;
   text-align: right;
-  color: grey;
+  color: $color-dark-grey;
   cursor: default;
 }
 
@@ -89,7 +90,7 @@
 
 .crossed {
   text-decoration: line-through;
-  color: lightgray;
+  color: $color-light-gray;
 }
 
 @keyframes slide-right {

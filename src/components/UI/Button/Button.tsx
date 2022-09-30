@@ -1,5 +1,5 @@
 import React, { ReactNode, useImperativeHandle, useRef } from 'react';
-import classes from './Button.module.css';
+import classes from './Button.module.scss';
 
 type ButtonProps = {
   type?: 'submit' | 'reset' | 'button';

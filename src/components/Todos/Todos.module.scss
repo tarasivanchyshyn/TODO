@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .todos {
   width: 90%;
   max-width: 40rem;
@@ -11,19 +13,19 @@
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  border-bottom: 2px solid #479796;
-  margin: 0.5rem 0 0.5rem 0;
-}
+  border-bottom: 2px solid $color-primary;
+  margin: 0.5rem 0;
 
-.list::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .message {
   text-align: center;
   font-size: 1.3rem;
   margin-top: 3rem;
-  color: gray;
+  color: $color-dark-grey;
 }
 
 .noitems {

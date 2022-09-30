@@ -1,14 +1,12 @@
 import { ReactNode, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-import { todosActions } from '../store/store';
-import { Todo } from '../store/store';
+import Modal from '../../Modals/Modal/Modal';
+import { todosActions, Todo } from '../../../store/todosSlice';
 
-import classes from './TodoItem.module.css';
-import Modal from './Modal';
+import classes from './TodoItem.module.scss';
 
 type TodoItemProps = {
   children?: ReactNode;

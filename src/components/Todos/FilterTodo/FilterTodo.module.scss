@@ -1,0 +1,39 @@
+@import '../../../variables.scss';
+
+.actions {
+  @include flex-center;
+
+  & button {
+    margin-left: 0.4rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  & svg {
+    margin-right: 0.45rem;
+  }
+}
+
+.clear {
+  &:focus {
+    background: $color-primary;
+    @include border;
+    box-shadow: none;
+  }
+  &:hover {
+    @include btn-action;
+  }
+}
+
+.message {
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+  color: $color-clear-msg;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}

@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
-import Button from './Button';
-import SortButton from './SortButton';
-import { filters, todosActions } from '../store/store';
+import Button from '../UI/Button/Button';
+import SortButton from './SortButton/SortButton';
+import { filters, todosActions } from '../../store/todosSlice';
+import { inputPlaceholder } from '../../constants';
 
-import classes from './Input.module.css';
+import classes from './Input.module.scss';
 
 type InputProps = {
   onOpenCreateTodoModal: () => void;
@@ -27,9 +28,8 @@ function Input(props: InputProps) {
 
   function submitHandler(event: FormEvent) {
     event.preventDefault();
-    if (enteredText.trim().length === 0) {
-      return;
-    }
+    if (!enteredText.trim()) return;
+
     dispatch(todosActions.addTodo({ enteredText, id: uuidv4() }));
     dispatch(todosActions.filterBy(filters.ALL));
     dispatch(todosActions.setIcon(faSort));
@@ -42,7 +42,7 @@ function Input(props: InputProps) {
       <input
         className={classes.input}
         type="text"
-        placeholder="Enter todo text"
+        placeholder={inputPlaceholder}
         value={enteredText}
         onChange={inputChangeHandler}
       />

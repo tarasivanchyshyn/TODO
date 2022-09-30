@@ -1,4 +1,4 @@
-import { Todo } from '../store/store';
+import { Todo } from '../store/todosSlice';
 import isAfter from 'date-fns/isAfter';
 
 export function compareTextAscend(a: Todo, b: Todo) {
