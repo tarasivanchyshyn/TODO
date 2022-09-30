@@ -29,11 +29,11 @@
 .control {
   width: 70%;
   @include flex-column;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .label {
-  margin: 0 0 0.2rem 0.4rem;
+  margin: 0 0 0.2rem 0.3rem;
   font-weight: 500;
   color: $color-primary;
 }
