@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import Modal from './components/Modal';
-import Header from './components/Header';
-import Input from './components/Input';
-import Search from './components/Search';
-import Todos from './components/Todos';
+import Modal from './components/Modals/Modal/Modal';
+import Header from './components/Header/Header';
+import Input from './components/InputBar/Input';
+import Search from './components/Search/Search';
+import Todos from './components/Todos/Todos';
 
 function App() {
   const [createTodoModalIsShown, setCreateTodoModalIsShown] = useState(false);

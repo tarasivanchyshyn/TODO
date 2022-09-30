@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faSquareCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import Button from './Button';
-import { filters, todosActions } from '../store/todosSlice';
-import { RootState } from '../store/store';
+import Button from '../../UI/Button/Button';
+import { filters, todosActions } from '../../../store/todosSlice';
+import { RootState } from '../../../store/store';
 
 import classes from './FilterTodo.module.scss';
 
@@ -33,7 +33,7 @@ function FilterTodo() {
     }, 2000);
   };
 
-  const { message, visible, hidden, actions } = classes;
+  const { message, visible, hidden, actions, clear } = classes;
 
   return (
     <>
@@ -53,7 +53,7 @@ function FilterTodo() {
           <FontAwesomeIcon icon={faSquareCheck} />
           Completed
         </Button>
-        <Button onClick={deleteCompletedHandler}>
+        <Button onClick={deleteCompletedHandler} className={clear}>
           <FontAwesomeIcon icon={faTrash} />
           Clear completed
         </Button>

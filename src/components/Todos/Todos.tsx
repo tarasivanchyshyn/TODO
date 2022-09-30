@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 
-import TodoItem from './TodoItem';
-import FilterTodo from './FilterTodo';
-import { filters } from '../store/todosSlice';
-import { RootState } from '../store/store';
+import TodoItem from './TodoItem/TodoItem';
+import FilterTodo from './FilterTodo/FilterTodo';
+import { filters } from '../../store/todosSlice';
+import { RootState } from '../../store/store';
 
 import classes from './Todos.module.scss';
 

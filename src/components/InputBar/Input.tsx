@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
-import Button from './Button';
-import SortButton from './SortButton';
-import { filters, todosActions } from '../store/todosSlice';
-import { inputPlaceholder } from '../constants';
+import Button from '../UI/Button/Button';
+import SortButton from './SortButton/SortButton';
+import { filters, todosActions } from '../../store/todosSlice';
+import { inputPlaceholder } from '../../constants';
 
 import classes from './Input.module.scss';
 

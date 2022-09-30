@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-import { todosActions } from '../store/todosSlice';
-import { searchPlaceholder } from '../constants';
+import { todosActions } from '../../store/todosSlice';
+import { searchPlaceholder } from '../../constants';
 
 import classes from './Search.module.scss';
 

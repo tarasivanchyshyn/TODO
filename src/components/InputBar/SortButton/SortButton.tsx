@@ -6,11 +6,11 @@ import { faArrowDownZA, faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
 import { faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 
-import Button from './Button';
-import { todosActions } from '../store/todosSlice';
-import { RootState } from '../store/store';
-import { dateSortOption, textSortOption } from '../constants';
-import { ascendOrder, descendOrder } from '../constants';
+import Button from '../../UI/Button/Button';
+import { todosActions } from '../../../store/todosSlice';
+import { RootState } from '../../../store/store';
+import { dateSortOption, textSortOption } from '../../../constants';
+import { ascendOrder, descendOrder } from '../../../constants';
 
 import classes from './SortButton.module.scss';
 

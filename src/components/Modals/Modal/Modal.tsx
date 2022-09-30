@@ -5,12 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { format, isBefore, isEqual } from 'date-fns';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
-import Button from './Button';
-import ErrorModal from './ErrorModal';
-import formatDateString from '../helpers/formatDateString';
-import { dateFormat, inputPlaceholder } from '../constants';
-import { filters, todosActions } from '../store/todosSlice';
-import { RootState } from '../store/store';
+import Button from '../../UI/Button/Button';
+import ErrorModal from '../ErrorModal/ErrorModal';
+import formatDateString from '../../../helpers/formatDateString';
+import { dateFormat, inputPlaceholder } from '../../../constants';
+import { filters, todosActions } from '../../../store/todosSlice';
+import { RootState } from '../../../store/store';
 
 import classes from './Modal.module.scss';
 

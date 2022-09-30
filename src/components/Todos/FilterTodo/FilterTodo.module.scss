@@ -1,4 +1,4 @@
-@import '../variables.scss';
+@import '../../../variables.scss';
 
 .actions {
   @include flex-center;
@@ -10,6 +10,17 @@
 
   & svg {
     margin-right: 0.45rem;
+  }
+}
+
+.clear {
+  &:focus {
+    background: $color-primary;
+    @include border;
+    box-shadow: none;
+  }
+  &:hover {
+    @include btn-action;
   }
 }
 

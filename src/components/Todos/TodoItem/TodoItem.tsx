@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-import Modal from './Modal';
-import { todosActions, Todo } from '../store/todosSlice';
+import Modal from '../../Modals/Modal/Modal';
+import { todosActions, Todo } from '../../../store/todosSlice';
 
 import classes from './TodoItem.module.scss';
 
