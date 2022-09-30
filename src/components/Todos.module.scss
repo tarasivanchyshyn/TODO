@@ -13,12 +13,12 @@
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  border-bottom: 2px solid #479796;
+  border-bottom: 2px solid $color-primary;
   margin: 0.5rem 0;
-}
 
-.list::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .message {

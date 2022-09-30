@@ -8,10 +8,10 @@
   background: $color-primary;
   @include border;
   cursor: pointer;
-}
 
-.button:hover,
-.button:active,
-.button:focus {
-  @include btn-action;
+  &:hover,
+  &:active,
+  &:focus {
+    @include btn-action;
+  }
 }

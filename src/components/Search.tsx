@@ -12,8 +12,13 @@ function Search() {
   const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
 
-  const inputChangeHandler = (e: FormEvent<HTMLInputElement>) =>
-    setSearchValue(e.currentTarget.value);
+  const inputChangeHandler = (e: FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value.replace(
+      /[$&+~,:;=?[\]@#|{}'<>.^*()%!-/]/,
+      ''
+    );
+    setSearchValue(value);
+  };
 
   useEffect(() => {
     const debounce = setTimeout(() => {
@@ -31,6 +36,7 @@ function Search() {
         className={classes.input}
         type="search"
         placeholder={searchPlaceholder}
+        value={searchValue}
         onChange={inputChangeHandler}
       ></input>
       <FontAwesomeIcon icon={faMagnifyingGlass} />

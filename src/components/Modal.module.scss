@@ -43,15 +43,15 @@
   font-size: 1rem;
   @include border-r;
   @include input-outline;
-}
 
-input::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-}
+  &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+  }
 
-.input:focus {
-  @include input-outline;
-  @include shadow;
+  &:focus {
+    @include input-outline;
+    @include shadow;
+  }
 }
 
 .actions {
@@ -67,12 +67,12 @@ input::-webkit-calendar-picker-indicator {
 .cancel {
   background: white;
   color: $color-primary;
-}
 
-.cancel:hover,
-.cancel:active {
-  background: white;
-  color: $color-cancel-2nd;
+  &:hover,
+  &:active {
+    background: white;
+    color: $color-cancel-2nd;
+  }
 }
 
 @keyframes slide-down {

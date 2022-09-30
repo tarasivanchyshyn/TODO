@@ -28,9 +28,8 @@ function Input(props: InputProps) {
 
   function submitHandler(event: FormEvent) {
     event.preventDefault();
-    if (!enteredText.trim().length) {
-      return;
-    }
+    if (!enteredText.trim()) return;
+
     dispatch(todosActions.addTodo({ enteredText, id: uuidv4() }));
     dispatch(todosActions.filterBy(filters.ALL));
     dispatch(todosActions.setIcon(faSort));

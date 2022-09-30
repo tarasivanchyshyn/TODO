@@ -7,6 +7,14 @@
   max-width: 20rem;
   position: relative;
   margin: 0 auto;
+
+  & svg {
+    position: absolute;
+    left: 0.6rem;
+    top: 0.5rem;
+    font-size: 0.9rem;
+    color: $color-glass;
+  }
 }
 
 .input {
@@ -17,20 +25,12 @@
   border: 1px solid $color-light-gray;
   @include border-r;
   outline: none;
-}
 
-.input:focus {
-  outline: 1px solid grey;
-}
+  &:focus {
+    outline: 1px solid grey;
+  }
 
-.form svg {
-  position: absolute;
-  left: 0.6rem;
-  top: 0.5rem;
-  font-size: 0.9rem;
-  color: $color-glass;
-}
-
-.input::-webkit-search-cancel-button:hover {
-  cursor: pointer;
+  &::-webkit-search-cancel-button:hover {
+    cursor: pointer;
+  }
 }

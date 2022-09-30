@@ -8,11 +8,11 @@
   height: 100%;
   width: 3rem;
   font-size: 1.3rem;
-}
 
-.sort:hover,
-.sort:focus {
-  background: $color-secondary;
+  &:hover,
+  &:focus {
+    background: $color-secondary;
+  }
 }
 
 .dropdown {
@@ -27,17 +27,17 @@
   z-index: 100;
   @include shadow;
   @include animation;
-}
 
-.dropdown::before {
-  content: '';
-  position: absolute;
-  top: -0.5rem;
-  left: 0.85rem;
-  height: 1rem;
-  width: 1rem;
-  @include bg-2nd;
-  transform: rotate(45deg);
+  &::before {
+    content: '';
+    position: absolute;
+    top: -0.5rem;
+    left: 0.85rem;
+    height: 1rem;
+    width: 1rem;
+    @include bg-2nd;
+    transform: rotate(45deg);
+  }
 }
 
 .dropdownHeader {
@@ -64,20 +64,20 @@
   cursor: pointer;
   @include flex-Ycenter;
   justify-content: space-between;
-}
 
-.dropdownItem:hover {
-  background: $color-primary;
-  color: white;
-}
+  &:hover {
+    background: $color-primary;
+    color: white;
+  }
 
-.dropdownItem svg {
-  margin: 0 1rem 0.3rem 0;
-  color: $color-dark-grey;
-}
+  & svg {
+    margin: 0 1rem 0.3rem 0;
+    color: $color-dark-grey;
+  }
 
-.dropdownItem:hover svg {
-  color: white;
+  &:hover svg {
+    color: white;
+  }
 }
 
 .sortUp svg {

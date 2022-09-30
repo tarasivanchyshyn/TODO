@@ -40,11 +40,7 @@ function ModalOverlay(props: UniversalProps) {
     const enteredCreatedDate = todoCreatedRef.current!.value;
     const enteredExpirationDate = todoExpirationtRef.current!.value;
 
-    if (
-      !enteredText.trim().length ||
-      !enteredCreatedDate ||
-      !enteredExpirationDate
-    ) {
+    if (!enteredText.trim() || !enteredCreatedDate || !enteredExpirationDate) {
       return;
     }
 
