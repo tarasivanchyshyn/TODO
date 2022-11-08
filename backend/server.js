@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-// import path from 'path';
-// import { fileURLToPath } from 'url';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 const port = process.env.PORT || 5000;
