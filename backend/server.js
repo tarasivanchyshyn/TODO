@@ -11,17 +11,17 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, '../frontend/build')));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-//   app.get('*', (req, res) =>
-//     res.sendFile(
-//       path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
-//     )
-//   );
-// } else {
-//   app.get('/', (req, res) => res.send('Please set to production'));
-// }
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
+    )
+  );
+} else {
+  app.get('/', (req, res) => res.send('Please set to production'));
+}
 
 app.get('/test', (req, res) => {
   res.send('It works');
