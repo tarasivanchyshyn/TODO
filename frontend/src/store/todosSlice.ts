@@ -45,8 +45,7 @@ const todosSlice = createSlice({
   reducers: {
     setTodos: (state, action) => {
       console.log(action.payload);
-
-      // state.todos = action.payload;
+      state.todos = action.payload;
     },
     addTodo: (state, action) => {
       const date = new Date();
