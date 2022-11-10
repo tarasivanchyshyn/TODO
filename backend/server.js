@@ -17,8 +17,4 @@ if (process.env.NODE_ENV === 'production') {
   app.get('/', (req, res) => res.send('Please set to production'));
 }
 
-app.get('/', (req, res) => {
-  res.send('It works');
-});
-
 app.listen(port, () => console.log(`Server started on port ${port}!`));
