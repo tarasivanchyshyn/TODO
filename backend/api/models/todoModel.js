@@ -12,7 +12,6 @@ const todoSchema = mongoose.Schema(
     expirationDate: String
   },
   {
-    timestamps: true,
     versionKey: false
   }
 );

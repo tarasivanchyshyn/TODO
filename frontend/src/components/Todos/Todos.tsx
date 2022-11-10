@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useMemo } from 'react';
-import axios from 'axios';
 
 import TodoItem from './TodoItem/TodoItem';
 import FilterTodo from './FilterTodo/FilterTodo';
 import { filters, todosActions } from '../../store/todosSlice';
 import { RootState } from '../../store/store';
+import { getAllTodos } from '../../api/services/todos';
 
 import classes from './Todos.module.scss';
 
@@ -13,8 +13,7 @@ const Todos = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get('https://todos-h97u.onrender.com/api/todos')
+    getAllTodos()
       .then((res) => dispatch(todosActions.setTodos(res.data)))
       .catch((err) => console.log(err));
   }, [dispatch]);
