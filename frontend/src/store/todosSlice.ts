@@ -43,6 +43,11 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+    setTodos: (state, action) => {
+      console.log(action.payload);
+
+      // state.todos = action.payload;
+    },
     addTodo: (state, action) => {
       const date = new Date();
       const now = format(date, dateFormat);

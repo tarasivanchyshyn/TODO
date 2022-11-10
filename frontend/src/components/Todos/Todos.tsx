@@ -1,14 +1,24 @@
-import { useSelector } from 'react-redux';
-import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo } from 'react';
+import axios from 'axios';
 
 import TodoItem from './TodoItem/TodoItem';
 import FilterTodo from './FilterTodo/FilterTodo';
-import { filters } from '../../store/todosSlice';
+import { filters, todosActions } from '../../store/todosSlice';
 import { RootState } from '../../store/store';
 
 import classes from './Todos.module.scss';
 
 const Todos = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios
+      .get('https://todos-h97u.onrender.com/api/todos')
+      .then((res) => dispatch(todosActions.setTodos(res.data)))
+      .catch((err) => console.log(err));
+  }, [dispatch]);
+
   let items = useSelector((state: RootState) => state.todos.todos);
   const filter = useSelector((state: RootState) => state.todos.filterBy);
   const searchValue = useSelector(
