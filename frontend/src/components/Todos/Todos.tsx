@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 
 import TodoItem from './TodoItem/TodoItem';
 import FilterTodo from './FilterTodo/FilterTodo';
-import { filters, todosActions } from '../../store/todosSlice';
+import { filters } from '../../store/todosSlice';
 import { RootState } from '../../store/store';
 import { getAllTodos } from '../../api/services/todos';
 
@@ -13,15 +13,7 @@ const Todos = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getAllTodos();
-        dispatch(todosActions.setTodos(res.data));
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
+    getAllTodos(dispatch);
   }, [dispatch]);
 
   let items = useSelector((state: RootState) => state.todos.todos);
