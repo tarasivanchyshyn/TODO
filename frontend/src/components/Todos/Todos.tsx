@@ -6,6 +6,7 @@ import TodoItem from './TodoItem/TodoItem';
 import FilterTodo from './FilterTodo/FilterTodo';
 import { filters, todosActions } from '../../store/todosSlice';
 import { RootState } from '../../store/store';
+import { getAllTodos } from '../../api/services/todos';
 
 import classes from './Todos.module.scss';
 
@@ -15,9 +16,7 @@ const Todos = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          'https://todos-h97u.onrender.com/api/todos'
-        );
+        const res = await getAllTodos();
         dispatch(todosActions.setTodos(res.data));
       } catch (err) {
         console.log(err);
