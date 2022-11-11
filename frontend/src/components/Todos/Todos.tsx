@@ -1,15 +1,23 @@
-import { useSelector } from 'react-redux';
-import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo } from 'react';
 
 import TodoItem from './TodoItem/TodoItem';
 import FilterTodo from './FilterTodo/FilterTodo';
 import { filters } from '../../store/todosSlice';
 import { RootState } from '../../store/store';
+import { getAllTodos } from '../../api/services/todos';
 
 import classes from './Todos.module.scss';
 
 const Todos = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getAllTodos(dispatch);
+  }, [dispatch]);
+
   let items = useSelector((state: RootState) => state.todos.todos);
+  items = useMemo(() => items, [items]);
   const filter = useSelector((state: RootState) => state.todos.filterBy);
   const searchValue = useSelector(
     (state: RootState) => state.todos.searchedValue
