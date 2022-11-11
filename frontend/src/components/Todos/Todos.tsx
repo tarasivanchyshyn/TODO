@@ -14,8 +14,14 @@ const Todos = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get('https://todos-h97u.onrender.com/api/todos');
-      dispatch(todosActions.setTodos(res.data));
+      try {
+        const res = await axios.get(
+          'https://todos-h97u.onrender.com/api/todos'
+        );
+        dispatch(todosActions.setTodos(res.data));
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchData();
   }, [dispatch]);
