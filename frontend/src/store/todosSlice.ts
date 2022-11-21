@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { faSort, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { dateFormat, ascendOrder } from '../constants';
 import { dateSortOption, textSortOption } from '../constants';
@@ -10,6 +10,8 @@ import {
   compareDateAscend,
   compareDateDescend
 } from '../helpers/compareFunctions';
+import { getAllTodos } from '../api/services/todos';
+import { AuthState } from './authSlice';
 
 export const filters = {
   ALL: 'ALL',
@@ -30,19 +32,42 @@ export interface TodosState {
   filterBy: string;
   sortIcon: IconDefinition;
   searchedValue: string;
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+  message: string | unknown;
 }
 
 const initialState: TodosState = {
   todos: [],
   filterBy: filters.ALL,
   sortIcon: faSort,
-  searchedValue: ''
+  searchedValue: '',
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
+  message: ''
 };
+
+export const getTodos = createAsyncThunk(
+  'todos/getAll',
+  async (_, thunkAPI) => {
+    try {
+      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
+      const token = auth.user?.token;
+      return getAllTodos(token);
+    } catch (error: any) {
+      const message = error.response.data.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+    reset: (state) => initialState,
     setTodos: (state, action) => {
       state.todos = action.payload;
     },
@@ -123,6 +148,22 @@ const todosSlice = createSlice({
     search: (state, action) => {
       state.searchedValue = action.payload;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getTodos.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getTodos.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.todos = action.payload || [];
+      })
+      .addCase(getTodos.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      });
   }
 });
 

@@ -6,21 +6,39 @@ import Header from '../components/Header/Header';
 import Input from '../components/InputBar/Input';
 import Search from '../components/Search/Search';
 import Todos from '../components/Todos/Todos';
-import { useAppSelector } from '../hooks/hooks';
+import Spinner from '../components/UI/Spinner/Spinner';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { getTodos, todosActions } from '../store/todosSlice';
 
 const Main = () => {
   const [createTodoModalIsShown, setCreateTodoModalIsShown] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+  const { isLoading, isError, message } = useAppSelector(
+    (state) => state.todos
+  );
 
   useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
     if (!user) {
       navigate('/login');
     }
-  }, [user, navigate]);
+    dispatch(getTodos());
+
+    return () => {
+      dispatch(todosActions.reset());
+    };
+  }, [user, navigate, dispatch, isError, message]);
 
   const toggleCreateTodoModal = () =>
     setCreateTodoModalIsShown(!createTodoModalIsShown);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>

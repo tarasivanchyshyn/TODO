@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { logoutUser, loginUser } from '../api/services/auth';
+import { logoutUser, loginUser, UserData } from '../api/services/auth';
 
 const getUserFromLocalStorage = () => {
   try {
@@ -11,12 +11,13 @@ const getUserFromLocalStorage = () => {
 const user = getUserFromLocalStorage();
 
 export interface User {
-  name?: string;
+  _id: string;
+  name: string;
   email: string;
-  password: string;
+  token: string;
 }
 
-interface AuthState {
+export interface AuthState {
   user: User | null;
   isLoading: boolean;
   isSuccess: boolean;
@@ -34,7 +35,7 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (user: User, thunkAPI) => {
+  async (user: UserData, thunkAPI) => {
     try {
       return await loginUser(user);
     } catch (error: any) {

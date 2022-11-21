@@ -1,21 +1,15 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import TodoItem from './TodoItem/TodoItem';
 import FilterTodo from './FilterTodo/FilterTodo';
 import { filters } from '../../store/todosSlice';
-import { getAllTodos } from '../../api/services/todos';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppSelector } from '../../hooks/hooks';
 
 import classes from './Todos.module.scss';
 
 const Todos = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    getAllTodos(dispatch);
-  }, [dispatch]);
-
   let items = useAppSelector((state) => state.todos.todos);
+
   items = useMemo(() => items, [items]);
   const { filterBy, searchedValue } = useAppSelector((state) => state.todos);
 
