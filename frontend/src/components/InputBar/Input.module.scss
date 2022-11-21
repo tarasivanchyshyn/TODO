@@ -4,8 +4,7 @@
   display: flex;
   width: 90%;
   max-width: 40rem;
-  margin: 2rem auto;
-  margin-bottom: 0.5rem;
+  margin: 1rem auto 0.5rem auto;
   position: relative;
 }
 
@@ -17,12 +16,12 @@
   font-size: 1.5rem;
   @include border-r;
   border: none;
-  border-bottom: 2px solid #549998;
+  border-bottom: 2px solid $color-primary;
   @include bg-2nd;
 
   &:focus {
     outline: none;
-    border-bottom: 2px solid #2a6b6a;
+    border-bottom: 2px solid $color-primary-dark;
   }
 }
 

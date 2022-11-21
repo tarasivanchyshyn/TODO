@@ -18,7 +18,7 @@ export const filters = {
 };
 
 export interface Todo {
-  id: string;
+  _id: string;
   done: boolean;
   text: string;
   creationDate: string;
@@ -54,7 +54,7 @@ const todosSlice = createSlice({
       const { id, enteredText } = action.payload;
       state.todos = [
         {
-          id: id,
+          _id: id,
           done: false,
           text: enteredText,
           creationDate: now,
@@ -67,7 +67,7 @@ const todosSlice = createSlice({
       const { id, enteredText, createdDate, expiringDate } = action.payload;
       state.todos = [
         {
-          id: id,
+          _id: id,
           done: false,
           text: enteredText,
           creationDate: createdDate,
@@ -77,18 +77,20 @@ const todosSlice = createSlice({
       ];
     },
     removeTodo: (state, action) => {
-      state.todos = state.todos.filter((el) => el.id !== action.payload);
+      state.todos = state.todos.filter((el) => el._id !== action.payload);
     },
     removeCompleted: (state) => {
       state.todos = state.todos.filter((el) => !el.done);
     },
     toggleTodo: (state, action) => {
-      const todoIndex = state.todos.findIndex((el) => el.id === action.payload);
+      const todoIndex = state.todos.findIndex(
+        (el) => el._id === action.payload
+      );
       state.todos[todoIndex].done = !state.todos[todoIndex].done;
     },
     updateTodo: (state, action) => {
       const { id, enteredText, createdDate, expiringDate } = action.payload;
-      const todoIndex = state.todos.findIndex((el) => el.id === id);
+      const todoIndex = state.todos.findIndex((el) => el._id === id);
       const todo = state.todos[todoIndex];
 
       todo.text = enteredText;

@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom';
 import { useRef, useState, FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { format, isBefore, isEqual } from 'date-fns';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +9,7 @@ import ErrorModal from '../ErrorModal/ErrorModal';
 import formatDateString from '../../../helpers/formatDateString';
 import { dateFormat, inputPlaceholder } from '../../../constants';
 import { filters, todosActions } from '../../../store/todosSlice';
-import { RootState } from '../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 import classes from './Modal.module.scss';
 
@@ -27,12 +26,12 @@ function ModalOverlay(props: UniversalProps) {
   const todoTextRef = useRef<HTMLInputElement>(null);
   const todoCreatedRef = useRef<HTMLInputElement>(null);
   const todoExpirationtRef = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [dateError, setDateError] = useState(false);
-  const todos = useSelector((state: RootState) => state.todos.todos);
+  const todos = useAppSelector((state) => state.todos.todos);
 
-  const todo = todos.find((el) => el.id === props.id);
+  const todo = todos.find((el) => el._id === props.id);
 
   function submitHandler(event: FormEvent) {
     event.preventDefault();
@@ -63,7 +62,7 @@ function ModalOverlay(props: UniversalProps) {
     if (todo) {
       dispatch(
         updateTodo({
-          id: todo.id,
+          id: todo._id,
           enteredText,
           createdDate,
           expiringDate
