@@ -50,13 +50,23 @@
       visibility: hidden;
     }
 
+    .visible {
+      visibility: visible;
+    }
+
     .button {
       width: 7rem;
+      padding: 0.3rem 0.9rem;
+      font-size: 1rem;
+      @include border-r;
+      color: $color-white;
+      background: $color-primary;
+      @include border;
+      cursor: pointer;
 
-      &:focus {
-        background: $color-primary;
-        border-color: $color-primary;
-        box-shadow: none;
+      &:active,
+      &:hover {
+        @include btn-action;
       }
     }
 

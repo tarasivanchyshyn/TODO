@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { login, authActions } from '../../store/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -16,7 +15,7 @@ const Login: FC = () => {
     password: ''
   });
   const { email, password } = formData;
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState('some error');
   const [msgIsShown, setMsgIsShown] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -47,12 +46,27 @@ const Login: FC = () => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!email || !password) {
+      setMsg('Please fill all the fields');
+      setMsgIsShown(true);
+      return;
+    }
+
     const userData = { email, password };
     dispatch(login(userData));
   };
 
-  const { wrapper, heading, form, input, errMsg, hidden, button, altLink } =
-    classes;
+  const {
+    wrapper,
+    heading,
+    form,
+    input,
+    errMsg,
+    hidden,
+    button,
+    altLink,
+    visible
+  } = classes;
 
   if (isLoading) {
     return <Spinner />;
@@ -81,10 +95,10 @@ const Login: FC = () => {
           placeholder="Enter password"
           onChange={inputChangeHandler}
         />
-        <p className={`${errMsg} ${msgIsShown ? '' : hidden}`}>{msg}</p>
-        <Button type="submit" className={button}>
+        <p className={`${errMsg} ${msgIsShown ? visible : hidden}`}>{msg}</p>
+        <button type="submit" className={button}>
           Log in
-        </Button>
+        </button>
         <p className={altLink}>
           New user? <Link to={'#'}>Sign Up</Link>
         </p>
