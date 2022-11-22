@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDownZA, faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
@@ -8,17 +7,17 @@ import { faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../UI/Button/Button';
 import { todosActions } from '../../../store/todosSlice';
-import { RootState } from '../../../store/store';
 import { dateSortOption, textSortOption } from '../../../constants';
 import { ascendOrder, descendOrder } from '../../../constants';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 import classes from './SortButton.module.scss';
 
 function SortButton() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const icon = useSelector((state: RootState) => state.todos.sortIcon);
+  const icon = useAppSelector((state) => state.todos.sortIcon);
 
   const toggleSortWindow = () => setOpen(!open);
 

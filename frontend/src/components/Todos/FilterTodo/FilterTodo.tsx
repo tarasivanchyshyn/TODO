@@ -1,20 +1,19 @@
 import { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faSquareCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../UI/Button/Button';
 import { filters, todosActions } from '../../../store/todosSlice';
-import { RootState } from '../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 import classes from './FilterTodo.module.scss';
 
 function FilterTodo() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLButtonElement>(null);
   const [msgIsShown, setMessageIsShown] = useState(false);
-  const items = useSelector((state: RootState) => state.todos.todos);
+  const items = useAppSelector((state) => state.todos.todos);
 
   const { filterBy, removeCompleted } = todosActions;
   const { ALL, ACTIVE, COMPLETED } = filters;

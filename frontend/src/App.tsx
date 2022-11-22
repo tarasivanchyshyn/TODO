@@ -1,24 +1,15 @@
-import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import Modal from './components/Modals/Modal/Modal';
-import Header from './components/Header/Header';
-import Input from './components/InputBar/Input';
-import Search from './components/Search/Search';
-import Todos from './components/Todos/Todos';
+import Main from './pages/Main';
+import Login from './pages/Auth/Login';
 
 function App() {
-  const [createTodoModalIsShown, setCreateTodoModalIsShown] = useState(false);
-
-  const toggleCreateTodoModal = () =>
-    setCreateTodoModalIsShown(!createTodoModalIsShown);
-
   return (
     <>
-      {createTodoModalIsShown && <Modal onClose={toggleCreateTodoModal} />}
-      <Header />
-      <Input onOpenCreateTodoModal={toggleCreateTodoModal} />
-      <Search />
-      <Todos />
+      <Routes>
+        <Route path="/" element={<Main />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+      </Routes>
     </>
   );
 }

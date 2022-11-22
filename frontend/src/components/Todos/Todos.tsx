@@ -1,31 +1,21 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import TodoItem from './TodoItem/TodoItem';
 import FilterTodo from './FilterTodo/FilterTodo';
 import { filters } from '../../store/todosSlice';
-import { RootState } from '../../store/store';
-import { getAllTodos } from '../../api/services/todos';
+import { useAppSelector } from '../../hooks/hooks';
 
 import classes from './Todos.module.scss';
 
 const Todos = () => {
-  const dispatch = useDispatch();
+  let items = useAppSelector((state) => state.todos.todos);
 
-  useEffect(() => {
-    getAllTodos(dispatch);
-  }, [dispatch]);
-
-  let items = useSelector((state: RootState) => state.todos.todos);
   items = useMemo(() => items, [items]);
-  const filter = useSelector((state: RootState) => state.todos.filterBy);
-  const searchValue = useSelector(
-    (state: RootState) => state.todos.searchedValue
-  );
+  const { filterBy, searchedValue } = useAppSelector((state) => state.todos);
 
-  if (searchValue.trim()) {
+  if (searchedValue.trim()) {
     items = items.filter((el) =>
-      el.text.toLowerCase().includes(searchValue.toLowerCase())
+      el.text.toLowerCase().includes(searchedValue.toLowerCase())
     );
   }
 
@@ -39,7 +29,7 @@ const Todos = () => {
   );
 
   const filterTodo = () => {
-    switch (filter) {
+    switch (filterBy) {
       case filters.COMPLETED:
         return filteredCompleted;
       case filters.ACTIVE:
@@ -56,7 +46,7 @@ const Todos = () => {
     filterTodo().length <= 0
       ? message
       : filterTodo().map((item) => (
-          <TodoItem key={item.id} item={item}></TodoItem>
+          <TodoItem key={item._id} item={item}></TodoItem>
         ));
 
   if (items.length) {

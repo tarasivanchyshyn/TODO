@@ -1,11 +1,16 @@
 import axios from 'axios';
-import { Dispatch } from '@reduxjs/toolkit';
-import { todosActions } from '../../store/todosSlice';
+import { serverBaseURL } from '../../constants';
 
-export const getAllTodos = async (dispatch: Dispatch) => {
+export const getAllTodos = async (token?: string) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
   try {
-    const res = await axios.get('https://todos-h97u.onrender.com/api/todos');
-    dispatch(todosActions.setTodos(res.data));
+    const res = await axios.get(serverBaseURL + '/api/todos', config);
+    return res.data;
   } catch (err) {
     console.log(err);
   }

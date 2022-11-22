@@ -4,7 +4,7 @@
   padding: 0.3rem 0.9rem;
   font-size: 1rem;
   @include border-r;
-  color: white;
+  color: $color-white;
   background: $color-primary;
   @include border;
   cursor: pointer;

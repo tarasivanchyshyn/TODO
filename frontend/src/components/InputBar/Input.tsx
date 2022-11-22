@@ -1,11 +1,11 @@
 import { useState, FormEvent } from 'react';
-import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../UI/Button/Button';
 import SortButton from './SortButton/SortButton';
 import { filters, todosActions } from '../../store/todosSlice';
+import { useAppDispatch } from '../../hooks/hooks';
 import { inputPlaceholder } from '../../constants';
 
 import classes from './Input.module.scss';
@@ -15,7 +15,7 @@ type InputProps = {
 };
 
 function Input(props: InputProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [enteredText, setEnteredText] = useState('');
 
   const inputChangeHandler = (event: FormEvent<HTMLInputElement>) => {

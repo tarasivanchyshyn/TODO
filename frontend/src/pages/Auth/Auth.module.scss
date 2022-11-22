@@ -1,0 +1,79 @@
+@import '../../variables.scss';
+
+.wrapper {
+  width: 90%;
+  max-width: 40rem;
+  margin: 5rem auto 0;
+  border: 2px solid $color-primary;
+  border-radius: 12px;
+  @include flex-column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+
+  .heading {
+    width: 100%;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: $color-primary;
+    cursor: default;
+  }
+
+  .form {
+    @include flex-column;
+    align-items: center;
+    width: 60%;
+
+    .input {
+      margin-bottom: 1rem;
+      width: 100%;
+      padding: 0.5rem;
+      outline: none;
+      border: 1px solid $color-light-gray;
+      border-radius: 4px;
+
+      &:focus {
+        border: 1px solid $color-primary;
+        outline: 1px solid $color-primary;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .errMsg {
+      color: $color-auth-msg;
+      margin: 0.2rem 0 0.5rem;
+    }
+
+    .hidden {
+      visibility: hidden;
+    }
+
+    .visible {
+      visibility: visible;
+    }
+
+    .button {
+      width: 7rem;
+      padding: 0.3rem 0.9rem;
+      font-size: 1rem;
+      @include border-r;
+      color: $color-white;
+      background: $color-primary;
+      @include border;
+      cursor: pointer;
+
+      &:active,
+      &:hover {
+        @include btn-action;
+      }
+    }
+
+    .altLink {
+      a {
+        color: $color-primary;
+      }
+    }
+  }
+}

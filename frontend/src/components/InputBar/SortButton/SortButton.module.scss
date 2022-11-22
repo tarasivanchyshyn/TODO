@@ -67,7 +67,7 @@
 
   &:hover {
     background: $color-primary;
-    color: white;
+    color: $color-white;
   }
 
   & svg {
@@ -76,7 +76,7 @@
   }
 
   &:hover svg {
-    color: white;
+    color: $color-white;
   }
 }
 

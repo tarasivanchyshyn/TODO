@@ -1,10 +1,10 @@
 import { ReactNode, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from '../../Modals/Modal/Modal';
 import { todosActions, Todo } from '../../../store/todosSlice';
+import { useAppDispatch } from '../../../hooks/hooks';
 
 import classes from './TodoItem.module.scss';
 
@@ -14,16 +14,16 @@ type TodoItemProps = {
 };
 
 const TodoItem = (props: TodoItemProps) => {
-  const { text, creationDate, expirationDate, id, done } = props.item;
-  const dispatch = useDispatch();
+  const { text, creationDate, expirationDate, _id, done } = props.item;
+  const dispatch = useAppDispatch();
 
   const [editModalIsShown, setEditModalIsShown] = useState(false);
 
   const toggleCreateTodoModal = () => setEditModalIsShown(!editModalIsShown);
 
   const editHandler = () => toggleCreateTodoModal();
-  const toggleHandler = () => dispatch(todosActions.toggleTodo(id));
-  const deleteHandler = () => dispatch(todosActions.removeTodo(id));
+  const toggleHandler = () => dispatch(todosActions.toggleTodo(_id));
+  const deleteHandler = () => dispatch(todosActions.removeTodo(_id));
 
   const crossed = `${done ? classes.crossed : ''}`;
   const { item, input, txt, other, icons } = classes;
@@ -31,7 +31,7 @@ const TodoItem = (props: TodoItemProps) => {
 
   return (
     <>
-      {editModalIsShown && <Modal onClose={toggleCreateTodoModal} id={id} />}
+      {editModalIsShown && <Modal onClose={toggleCreateTodoModal} id={_id} />}
       <li className={item}>
         <input
           type="checkbox"
