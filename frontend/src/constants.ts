@@ -10,3 +10,5 @@ export const descendOrder = 'descend';
 
 export const inputPlaceholder = 'Enter todo text';
 export const searchPlaceholder = 'Search for todos';
+
+export const serverBaseURL = 'https://todos-h97u.onrender.com';

@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-const url = 'https://todos-h97u.onrender.com/api/auth';
-// const url = 'http://localhost:5000/api/auth';
+import { serverBaseURL } from '../../constants';
 
 export interface UserData {
   email: string;
@@ -9,7 +7,7 @@ export interface UserData {
 }
 
 export const loginUser = async (userData: UserData) => {
-  const res = await axios.post(url + '/login', userData);
+  const res = await axios.post(serverBaseURL + '/api/auth/login', userData);
 
   if (res.data) {
     localStorage.setItem('user', JSON.stringify(res.data));

@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-const url = 'https://todos-h97u.onrender.com/api/todos';
-// const url = 'http://localhost:5000/api/todos';
+import { serverBaseURL } from '../../constants';
 
 export const getAllTodos = async (token?: string) => {
   const config = {
@@ -11,7 +9,7 @@ export const getAllTodos = async (token?: string) => {
   };
 
   try {
-    const res = await axios.get(url, config);
+    const res = await axios.get(serverBaseURL + '/api/todos', config);
     return res.data;
   } catch (err) {
     console.log(err);
