@@ -8,8 +8,9 @@ export const getTodos = asyncHandler(async (req, res) => {
 });
 
 export const createTodo = asyncHandler(async (req, res) => {
-  if (!req.body.text) {
-    res.status(400).json({ message: 'Please add a text field' });
+  if (!req.body.text || !req.body.creationDate || !req.body.expirationDate) {
+    res.status(400).json({ message: 'Please add all fields to create' });
+    return;
   }
 
   const todo = await Todo.create({
