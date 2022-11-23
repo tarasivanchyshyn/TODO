@@ -10,7 +10,7 @@ import {
   compareDateAscend,
   compareDateDescend
 } from '../helpers/compareFunctions';
-import { getAllTodos } from '../api/services/todos';
+import todoService from '../api/services/todos';
 import { AuthState } from './authSlice';
 
 export const filters = {
@@ -55,7 +55,26 @@ export const getTodos = createAsyncThunk(
     try {
       const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
       const token = auth.user?.token;
-      return getAllTodos(token);
+      return await todoService.getAllTodos(token);
+    } catch (error: any) {
+      const message = error.response.data.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export interface todoData {
+  text: string;
+  creationDate: string;
+  expirationDate: string;
+}
+export const createTodo = createAsyncThunk(
+  'todos/create',
+  async (todoData: todoData, thunkAPI) => {
+    try {
+      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
+      const token = auth.user?.token;
+      return await todoService.createTodo(todoData, token);
     } catch (error: any) {
       const message = error.response.data.message;
       return thunkAPI.rejectWithValue(message);
@@ -160,6 +179,19 @@ const todosSlice = createSlice({
         state.todos = action.payload || [];
       })
       .addCase(getTodos.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(createTodo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createTodo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.todos.unshift(action.payload);
+      })
+      .addCase(createTodo.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { logoutUser, loginUser, UserData } from '../api/services/auth';
+import authService, { UserData } from '../api/services/auth';
 
 const getUserFromLocalStorage = () => {
   try {
@@ -37,7 +37,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (user: UserData, thunkAPI) => {
     try {
-      return await loginUser(user);
+      return await authService.loginUser(user);
     } catch (error: any) {
       const message = error.response.data.message;
       return thunkAPI.rejectWithValue(message);
@@ -46,7 +46,7 @@ export const login = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-  await logoutUser();
+  await authService.logoutUser();
 });
 
 const authSlice = createSlice({
