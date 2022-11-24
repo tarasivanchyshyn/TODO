@@ -8,6 +8,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   if (!email || !password) {
     res.status(400).json({ message: 'Please fill all the fields' });
+    return;
   }
 
   const user = await User.findOne({ email });
@@ -21,6 +22,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400).json({ message: 'Invalid email or password' });
+    return;
   }
 });
 

@@ -6,7 +6,7 @@ export interface UserData {
   password: string;
 }
 
-export const loginUser = async (userData: UserData) => {
+const loginUser = async (userData: UserData) => {
   const res = await axios.post(serverBaseURL + '/api/auth/login', userData);
 
   if (res.data) {
@@ -16,6 +16,13 @@ export const loginUser = async (userData: UserData) => {
   return res.data;
 };
 
-export const logoutUser = () => {
+const logoutUser = () => {
   localStorage.removeItem('user');
 };
+
+const authService = {
+  loginUser,
+  logoutUser
+};
+
+export default authService;

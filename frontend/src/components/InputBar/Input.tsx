@@ -1,12 +1,12 @@
 import { useState, FormEvent } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
+import { format } from 'date-fns';
 
 import Button from '../UI/Button/Button';
 import SortButton from './SortButton/SortButton';
-import { filters, todosActions } from '../../store/todosSlice';
+import { createTodo, filters, todosActions } from '../../store/todosSlice';
 import { useAppDispatch } from '../../hooks/hooks';
-import { inputPlaceholder } from '../../constants';
+import { dateFormat, inputPlaceholder } from '../../constants';
 
 import classes from './Input.module.scss';
 
@@ -30,7 +30,17 @@ function Input(props: InputProps) {
     event.preventDefault();
     if (!enteredText.trim()) return;
 
-    dispatch(todosActions.addTodo({ enteredText, id: uuidv4() }));
+    const date = new Date();
+    const now = format(date, dateFormat);
+    const tomorrow = format(date.setHours(24, 0, 0, 0), dateFormat);
+
+    dispatch(
+      createTodo({
+        text: enteredText,
+        creationDate: now,
+        expirationDate: tomorrow
+      })
+    );
     dispatch(todosActions.filterBy(filters.ALL));
     dispatch(todosActions.setIcon(faSort));
     setEnteredText('');

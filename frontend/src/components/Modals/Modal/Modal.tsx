@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom';
 import { useRef, useState, FormEvent } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { format, isBefore, isEqual } from 'date-fns';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,7 +7,7 @@ import Button from '../../UI/Button/Button';
 import ErrorModal from '../ErrorModal/ErrorModal';
 import formatDateString from '../../../helpers/formatDateString';
 import { dateFormat, inputPlaceholder } from '../../../constants';
-import { filters, todosActions } from '../../../store/todosSlice';
+import { createTodo, filters, todosActions } from '../../../store/todosSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 import classes from './Modal.module.scss';
@@ -57,7 +56,7 @@ function ModalOverlay(props: UniversalProps) {
     const createdDate = format(enteredCreatedDateObj, dateFormat);
     const expiringDate = format(enteredExpirationDateObj, dateFormat);
 
-    const { updateTodo, setIcon, addTodoFromModal, filterBy } = todosActions;
+    const { updateTodo, setIcon, filterBy } = todosActions;
 
     if (todo) {
       dispatch(
@@ -71,11 +70,10 @@ function ModalOverlay(props: UniversalProps) {
       dispatch(setIcon(faSort));
     } else {
       dispatch(
-        addTodoFromModal({
-          id: uuidv4(),
-          enteredText,
-          createdDate,
-          expiringDate
+        createTodo({
+          text: enteredText,
+          creationDate: createdDate,
+          expirationDate: expiringDate
         })
       );
       dispatch(filterBy(filters.ALL));
