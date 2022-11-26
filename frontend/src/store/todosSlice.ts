@@ -1,8 +1,7 @@
-import { format } from 'date-fns';
 import { faSort, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { dateFormat, ascendOrder } from '../constants';
+import { ascendOrder } from '../constants';
 import { dateSortOption, textSortOption } from '../constants';
 import {
   compareTextAscend,
@@ -82,65 +81,55 @@ export const createTodo = createAsyncThunk(
   }
 );
 
+export interface updateTodoData {
+  id: string;
+  done?: boolean;
+  text?: string;
+  creationDate?: string;
+  expirationDate?: string;
+}
+export const updateTodo = createAsyncThunk(
+  'todos/update',
+  async (todoData: updateTodoData, thunkAPI) => {
+    const { id } = todoData;
+
+    try {
+      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
+      const token = auth.user?.token;
+
+      if (id) {
+        return await todoService.updateTodo(todoData, token);
+      }
+    } catch (error: any) {
+      const message = error.response.data.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const deleteTodo = createAsyncThunk(
+  'todos/delete',
+  async (todoId: string | null, thunkAPI) => {
+    try {
+      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
+      const token = auth.user?.token;
+      if (todoId) {
+        return await todoService.deleteTodo(todoId, token);
+      } else {
+        return await todoService.deleteTodo(null, token);
+      }
+    } catch (error: any) {
+      const message = error.response.data.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
     reset: (state) => initialState,
-    setTodos: (state, action) => {
-      state.todos = action.payload;
-    },
-    addTodo: (state, action) => {
-      const date = new Date();
-      const now = format(date, dateFormat);
-      const tomorrow = format(date.setHours(24, 0, 0, 0), dateFormat);
-
-      const { id, enteredText } = action.payload;
-      state.todos = [
-        {
-          _id: id,
-          done: false,
-          text: enteredText,
-          creationDate: now,
-          expirationDate: tomorrow
-        },
-        ...state.todos
-      ];
-    },
-    addTodoFromModal: (state, action) => {
-      const { id, enteredText, createdDate, expiringDate } = action.payload;
-      state.todos = [
-        {
-          _id: id,
-          done: false,
-          text: enteredText,
-          creationDate: createdDate,
-          expirationDate: expiringDate
-        },
-        ...state.todos
-      ];
-    },
-    removeTodo: (state, action) => {
-      state.todos = state.todos.filter((el) => el._id !== action.payload);
-    },
-    removeCompleted: (state) => {
-      state.todos = state.todos.filter((el) => !el.done);
-    },
-    toggleTodo: (state, action) => {
-      const todoIndex = state.todos.findIndex(
-        (el) => el._id === action.payload
-      );
-      state.todos[todoIndex].done = !state.todos[todoIndex].done;
-    },
-    updateTodo: (state, action) => {
-      const { id, enteredText, createdDate, expiringDate } = action.payload;
-      const todoIndex = state.todos.findIndex((el) => el._id === id);
-      const todo = state.todos[todoIndex];
-
-      todo.text = enteredText;
-      todo.creationDate = createdDate;
-      todo.expirationDate = expiringDate;
-    },
     filterBy: (state, action) => {
       state.filterBy = action.payload;
     },
@@ -192,6 +181,44 @@ const todosSlice = createSlice({
         state.todos.unshift(action.payload);
       })
       .addCase(createTodo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateTodo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateTodo.fulfilled, (state, action) => {
+        const { _id } = action.payload;
+        const todoIndex = state.todos.findIndex((el) => el._id === _id);
+
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.todos[todoIndex] = {
+          ...state.todos[todoIndex],
+          ...action.payload
+        };
+      })
+      .addCase(updateTodo.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(deleteTodo.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteTodo.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        if (action.payload.id) {
+          state.todos = state.todos.filter(
+            (el) => el._id !== action.payload.id
+          );
+        } else {
+          state.todos = state.todos.filter((el) => !el.done);
+        }
+      })
+      .addCase(deleteTodo.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

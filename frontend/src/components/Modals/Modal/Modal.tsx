@@ -7,7 +7,12 @@ import Button from '../../UI/Button/Button';
 import ErrorModal from '../ErrorModal/ErrorModal';
 import formatDateString from '../../../helpers/formatDateString';
 import { dateFormat, inputPlaceholder } from '../../../constants';
-import { createTodo, filters, todosActions } from '../../../store/todosSlice';
+import {
+  createTodo,
+  filters,
+  todosActions,
+  updateTodo
+} from '../../../store/todosSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 import classes from './Modal.module.scss';
@@ -56,15 +61,15 @@ function ModalOverlay(props: UniversalProps) {
     const createdDate = format(enteredCreatedDateObj, dateFormat);
     const expiringDate = format(enteredExpirationDateObj, dateFormat);
 
-    const { updateTodo, setIcon, filterBy } = todosActions;
+    const { setIcon, filterBy } = todosActions;
 
     if (todo) {
       dispatch(
         updateTodo({
           id: todo._id,
-          enteredText,
-          createdDate,
-          expiringDate
+          text: enteredText,
+          creationDate: createdDate,
+          expirationDate: expiringDate
         })
       );
       dispatch(setIcon(faSort));
@@ -93,7 +98,7 @@ function ModalOverlay(props: UniversalProps) {
     <>
       {dateError && <ErrorModal onClose={() => setDateError(false)} />}
       <div className={modal}>
-        <h3 className={header}>Create Todo</h3>
+        <h3 className={header}>{!todo ? 'Create Todo' : 'Edit todo'}</h3>
         <form className={form} onSubmit={submitHandler}>
           <div className={control}>
             <label htmlFor="text" className={label}>

@@ -4,7 +4,7 @@ import { faList, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faSquareCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../UI/Button/Button';
-import { filters, todosActions } from '../../../store/todosSlice';
+import { deleteTodo, filters, todosActions } from '../../../store/todosSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 import classes from './FilterTodo.module.scss';
@@ -15,7 +15,7 @@ function FilterTodo() {
   const [msgIsShown, setMessageIsShown] = useState(false);
   const items = useAppSelector((state) => state.todos.todos);
 
-  const { filterBy, removeCompleted } = todosActions;
+  const { filterBy } = todosActions;
   const { ALL, ACTIVE, COMPLETED } = filters;
 
   const filterHandler = (chosenFilter: string) =>
@@ -24,7 +24,7 @@ function FilterTodo() {
   const deleteCompletedHandler = () => {
     if (items.every((el) => !el.done)) return;
 
-    dispatch(removeCompleted());
+    dispatch(deleteTodo(null));
     ref.current!.focus();
     setMessageIsShown(true);
     setTimeout(() => {

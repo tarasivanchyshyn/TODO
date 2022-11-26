@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSort,
+  faSortDown,
+  faSortUp
+} from '@fortawesome/free-solid-svg-icons';
 import { faArrowDownZA, faArrowUpAZ } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
 import { faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../UI/Button/Button';
-import { todosActions } from '../../../store/todosSlice';
+import { getTodos, todosActions } from '../../../store/todosSlice';
 import { dateSortOption, textSortOption } from '../../../constants';
 import { ascendOrder, descendOrder } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
@@ -50,6 +54,12 @@ function SortButton() {
     setOpen(false);
   };
 
+  const resetSorting = () => {
+    dispatch(getTodos());
+    dispatch(setIcon(faSort));
+    setOpen(false);
+  };
+
   const { sort, dropdown, dropdownHeader, dropdownList, dropdownItem, sortUp } =
     classes;
 
@@ -89,6 +99,9 @@ function SortButton() {
             >
               Text
               <FontAwesomeIcon icon={faSortDown} />
+            </li>
+            <li className={dropdownItem} onClick={resetSorting}>
+              Reset
             </li>
           </ul>
         </div>

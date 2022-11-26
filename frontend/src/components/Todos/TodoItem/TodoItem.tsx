@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from '../../Modals/Modal/Modal';
-import { todosActions, Todo } from '../../../store/todosSlice';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { Todo, updateTodo, deleteTodo } from '../../../store/todosSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 import classes from './TodoItem.module.scss';
 
@@ -15,15 +15,19 @@ type TodoItemProps = {
 
 const TodoItem = (props: TodoItemProps) => {
   const { text, creationDate, expirationDate, _id, done } = props.item;
-  const dispatch = useAppDispatch();
-
   const [editModalIsShown, setEditModalIsShown] = useState(false);
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state) => state.todos.todos);
+
+  const todoIndex = todos.findIndex((el) => el._id === _id);
+  const todo = todos[todoIndex];
 
   const toggleCreateTodoModal = () => setEditModalIsShown(!editModalIsShown);
 
   const editHandler = () => toggleCreateTodoModal();
-  const toggleHandler = () => dispatch(todosActions.toggleTodo(_id));
-  const deleteHandler = () => dispatch(todosActions.removeTodo(_id));
+  const toggleHandler = () =>
+    dispatch(updateTodo({ id: _id, done: !todo.done }));
+  const deleteHandler = () => dispatch(deleteTodo(_id));
 
   const crossed = `${done ? classes.crossed : ''}`;
   const { item, input, txt, other, icons } = classes;
