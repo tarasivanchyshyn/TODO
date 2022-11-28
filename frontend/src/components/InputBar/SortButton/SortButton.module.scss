@@ -78,6 +78,18 @@
   &:hover svg {
     color: $color-white;
   }
+
+  &:last-child {
+    padding: 0;
+    justify-content: center;
+    color: $color-dark-grey;
+    border-top: 1px solid $color-light-gray;
+
+    &:hover {
+      background: none;
+      color: $color-primary-dark;
+    }
+  }
 }
 
 .sortUp svg {
