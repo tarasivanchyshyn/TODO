@@ -25,6 +25,10 @@ const Login: FC = () => {
   );
 
   useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+
     if (isError) {
       setMsg(String(message));
       setMsgIsShown(true);
@@ -32,6 +36,7 @@ const Login: FC = () => {
     if (isSuccess) {
       navigate('/');
     }
+
     dispatch(authActions.reset());
   }, [user, isSuccess, isError, message, navigate, dispatch]);
 
