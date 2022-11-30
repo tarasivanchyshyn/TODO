@@ -28,7 +28,7 @@ export const updateTodo = asyncHandler(async (req, res) => {
   const todo = await Todo.findById(req.params.id);
 
   if (!todo) {
-    res.status(400).json({ message: 'Todo not found' });
+    res.status(404).json({ message: 'Todo not found' });
     return;
   }
 
@@ -59,7 +59,7 @@ export const deleteTodo = asyncHandler(async (req, res) => {
   const todo = await Todo.findById(req.params.id);
 
   if (!todo) {
-    res.status(400).json({ message: 'Todo not found' });
+    res.status(404).json({ message: 'Todo not found' });
     return;
   }
 

@@ -14,6 +14,7 @@ const getAllTodos = async (token?: string) => {
     return res.data;
   } catch (err) {
     console.log(err);
+    localStorage.removeItem('user');
   }
 };
 
@@ -33,6 +34,7 @@ const createTodo = async (todoData: todoData, token?: string) => {
     return res.data;
   } catch (err) {
     console.log(err);
+    localStorage.removeItem('user');
   }
 };
 
@@ -52,6 +54,7 @@ const updateTodo = async (todoData: updateTodoData, token?: string) => {
     return res.data;
   } catch (err) {
     console.log(err);
+    localStorage.removeItem('user');
   }
 };
 
@@ -75,6 +78,7 @@ const deleteTodo = async (todoId: string | null, token?: string) => {
     }
   } catch (err) {
     console.log(err);
+    localStorage.removeItem('user');
   }
 };
 
