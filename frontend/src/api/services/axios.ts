@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { serverBaseURL } from '../../constants';
 
-// const url = 'http://localhost:5000';
-
 const instance = axios.create({
   baseURL: serverBaseURL
 });
