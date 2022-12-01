@@ -1,18 +1,30 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Main from './pages/Main';
 import Login from './pages/Auth/Login';
 import NotFound from './pages/NotFound/NotFound';
+import { useAppSelector } from './hooks/hooks';
 
 function App() {
-  return (
+  const user = useAppSelector((state) => state.auth.user);
+
+  const routes = !!user ? (
     <>
-      <Routes>
-        <Route path="/" element={<Main />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path={'*'} element={<NotFound />} />
-      </Routes>
+      <Route path="/" element={<Main />} />
+      <Route path="/login" element={<Navigate replace to="/" />} />
     </>
+  ) : (
+    <>
+      <Route path="/" element={<Navigate replace to="/login" />} />
+      <Route path="/login" element={<Login />} />
+    </>
+  );
+
+  return (
+    <Routes>
+      {routes}
+      <Route path={'*'} element={<NotFound />} />
+    </Routes>
   );
 }
 

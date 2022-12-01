@@ -9,7 +9,7 @@ import Todos from '../components/Todos/Todos';
 import Spinner from '../components/UI/Spinner/Spinner';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { getTodos, todosActions } from '../store/todosSlice';
-import { authActions, logout } from '../store/authSlice';
+import { logout } from '../store/authSlice';
 
 const Main = () => {
   const [createTodoModalIsShown, setCreateTodoModalIsShown] = useState(false);
@@ -25,17 +25,12 @@ const Main = () => {
   useEffect(() => {
     if (!isTokenActive) {
       dispatch(logout());
-      dispatch(authActions.reset());
-      dispatch(todosActions.reset());
     }
   }, [dispatch, isTokenActive]);
 
   useEffect(() => {
     if (isError) {
       console.log(message);
-    }
-    if (!user) {
-      navigate('/login');
     }
     dispatch(getTodos());
 

@@ -1,6 +1,5 @@
-import axios from 'axios';
-import { serverBaseURL } from '../../constants';
 import { todoData, updateTodoData } from '../../store/todosSlice';
+import instance from './axios';
 
 const getAllTodos = async (token?: string) => {
   const config = {
@@ -10,11 +9,10 @@ const getAllTodos = async (token?: string) => {
   };
 
   try {
-    const res = await axios.get(serverBaseURL + '/api/todos', config);
+    const res = await instance.get('/api/todos', config);
     return res.data;
   } catch (err) {
     console.log(err);
-    localStorage.removeItem('user');
   }
 };
 
@@ -26,15 +24,10 @@ const createTodo = async (todoData: todoData, token?: string) => {
   };
 
   try {
-    const res = await axios.post(
-      serverBaseURL + '/api/todos',
-      todoData,
-      config
-    );
+    const res = await instance.post('/api/todos', todoData, config);
     return res.data;
   } catch (err) {
     console.log(err);
-    localStorage.removeItem('user');
   }
 };
 
@@ -46,15 +39,14 @@ const updateTodo = async (todoData: updateTodoData, token?: string) => {
   };
 
   try {
-    const res = await axios.put(
-      serverBaseURL + '/api/todos/' + todoData.id,
+    const res = await instance.put(
+      '/api/todos/' + todoData.id,
       todoData,
       config
     );
     return res.data;
   } catch (err) {
     console.log(err);
-    localStorage.removeItem('user');
   }
 };
 
@@ -67,18 +59,14 @@ const deleteTodo = async (todoId: string | null, token?: string) => {
 
   try {
     if (todoId) {
-      const res = await axios.delete(
-        serverBaseURL + '/api/todos/' + todoId,
-        config
-      );
+      const res = await instance.delete('/api/todos/' + todoId, config);
       return res.data;
     } else {
-      const res = await axios.delete(serverBaseURL + '/api/todos', config);
+      const res = await instance.delete('/api/todos', config);
       return res.data;
     }
   } catch (err) {
     console.log(err);
-    localStorage.removeItem('user');
   }
 };
 
