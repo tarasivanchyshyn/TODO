@@ -178,7 +178,9 @@ const todosSlice = createSlice({
       .addCase(createTodo.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.todos.unshift(action.payload);
+        if (action.payload) {
+          state.todos.unshift(action.payload);
+        }
       })
       .addCase(createTodo.rejected, (state, action) => {
         state.isLoading = false;
@@ -189,15 +191,18 @@ const todosSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateTodo.fulfilled, (state, action) => {
-        const { _id } = action.payload;
-        const todoIndex = state.todos.findIndex((el) => el._id === _id);
-
         state.isLoading = false;
-        state.isSuccess = true;
-        state.todos[todoIndex] = {
-          ...state.todos[todoIndex],
-          ...action.payload
-        };
+
+        if (action.payload) {
+          const { _id } = action.payload;
+          const todoIndex = state.todos.findIndex((el) => el._id === _id);
+
+          state.isSuccess = true;
+          state.todos[todoIndex] = {
+            ...state.todos[todoIndex],
+            ...action.payload
+          };
+        }
       })
       .addCase(updateTodo.rejected, (state, action) => {
         state.isLoading = false;
@@ -210,7 +215,7 @@ const todosSlice = createSlice({
       .addCase(deleteTodo.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        if (action.payload.id) {
+        if (action.payload && action.payload.id) {
           state.todos = state.todos.filter(
             (el) => el._id !== action.payload.id
           );
