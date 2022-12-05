@@ -2,14 +2,8 @@ import { todoData, updateTodoData } from '../../store/todosSlice';
 import instance from './axios';
 
 const getAllTodos = async (token?: string) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
-
   try {
-    const res = await instance.get('/api/todos', config);
+    const res = await instance.get('/api/todos');
     return res.data;
   } catch (err) {
     console.log(err);
@@ -17,14 +11,8 @@ const getAllTodos = async (token?: string) => {
 };
 
 const createTodo = async (todoData: todoData, token?: string) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
-
   try {
-    const res = await instance.post('/api/todos', todoData, config);
+    const res = await instance.post('/api/todos', todoData);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -32,18 +20,8 @@ const createTodo = async (todoData: todoData, token?: string) => {
 };
 
 const updateTodo = async (todoData: updateTodoData, token?: string) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
-
   try {
-    const res = await instance.put(
-      '/api/todos/' + todoData.id,
-      todoData,
-      config
-    );
+    const res = await instance.put('/api/todos/' + todoData.id, todoData);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -51,18 +29,12 @@ const updateTodo = async (todoData: updateTodoData, token?: string) => {
 };
 
 const deleteTodo = async (todoId: string | null, token?: string) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
-
   try {
     if (todoId) {
-      const res = await instance.delete('/api/todos/' + todoId, config);
+      const res = await instance.delete('/api/todos/' + todoId);
       return res.data;
     } else {
-      const res = await instance.delete('/api/todos', config);
+      const res = await instance.delete('/api/todos');
       return res.data;
     }
   } catch (err) {

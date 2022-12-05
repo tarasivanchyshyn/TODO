@@ -53,7 +53,7 @@ export const getTodos = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.token;
+      const token = auth.user?.accessToken;
       return await todoService.getAllTodos(token);
     } catch (error: any) {
       const message = error.response.data.message;
@@ -72,7 +72,7 @@ export const createTodo = createAsyncThunk(
   async (todoData: todoData, thunkAPI) => {
     try {
       const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.token;
+      const token = auth.user?.accessToken;
       return await todoService.createTodo(todoData, token);
     } catch (error: any) {
       const message = error.response.data.message;
@@ -95,7 +95,7 @@ export const updateTodo = createAsyncThunk(
 
     try {
       const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.token;
+      const token = auth.user?.accessToken;
 
       if (id) {
         return await todoService.updateTodo(todoData, token);
@@ -112,7 +112,7 @@ export const deleteTodo = createAsyncThunk(
   async (todoId: string | null, thunkAPI) => {
     try {
       const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.token;
+      const token = auth.user?.accessToken;
       if (todoId) {
         return await todoService.deleteTodo(todoId, token);
       } else {
