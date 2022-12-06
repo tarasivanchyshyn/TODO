@@ -8,6 +8,15 @@ const instance = axios.create({
   baseURL: serverBaseURL
 });
 
+instance.interceptors.request.use((config) => {
+  const accessToken = store.getState().auth.user?.accessToken;
+  if (accessToken) {
+    config.headers = config.headers ?? {};
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
+
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -17,24 +26,17 @@ instance.interceptors.response.use(
       if (user) {
         await store.dispatch(
           refresh({
-            access_token: user?.accessToken,
-            refresh_token: user?.refreshToken
+            access_token: user.accessToken,
+            refresh_token: user.refreshToken
           })
         );
       }
+
+      return instance.request(error.config);
     } else {
       return Promise.reject(error);
     }
   }
 );
-
-instance.interceptors.request.use((config) => {
-  const accessToken = store.getState().auth.user?.accessToken;
-  if (accessToken) {
-    config.headers = config.headers ?? {};
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
-  return config;
-});
 
 export default instance;
