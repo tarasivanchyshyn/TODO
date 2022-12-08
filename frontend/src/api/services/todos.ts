@@ -1,7 +1,7 @@
 import { todoData, updateTodoData } from '../../store/todosSlice';
 import instance from './axios';
 
-const getAllTodos = async (token?: string) => {
+const getAllTodos = async () => {
   try {
     const res = await instance.get('/api/todos');
     return res.data;
@@ -10,7 +10,7 @@ const getAllTodos = async (token?: string) => {
   }
 };
 
-const createTodo = async (todoData: todoData, token?: string) => {
+const createTodo = async (todoData: todoData) => {
   try {
     const res = await instance.post('/api/todos', todoData);
     return res.data;
@@ -19,7 +19,7 @@ const createTodo = async (todoData: todoData, token?: string) => {
   }
 };
 
-const updateTodo = async (todoData: updateTodoData, token?: string) => {
+const updateTodo = async (todoData: updateTodoData) => {
   try {
     const res = await instance.put('/api/todos/' + todoData.id, todoData);
     return res.data;
@@ -28,7 +28,7 @@ const updateTodo = async (todoData: updateTodoData, token?: string) => {
   }
 };
 
-const deleteTodo = async (todoId: string | null, token?: string) => {
+const deleteTodo = async (todoId: string | null) => {
   try {
     if (todoId) {
       const res = await instance.delete('/api/todos/' + todoId);

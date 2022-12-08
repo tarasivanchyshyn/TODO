@@ -21,18 +21,22 @@ instance.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response.status === 401) {
+      const originalRequest = error.config;
       const user = store.getState().auth.user;
 
       if (user) {
-        await store.dispatch(
+        const newTokens = await store.dispatch(
           refresh({
             access_token: user.accessToken,
             refresh_token: user.refreshToken
           })
         );
+        originalRequest.headers = {
+          ...originalRequest.headers,
+          Authorization: `Bearer ${newTokens.payload.accessToken}`
+        };
+        return instance.request(originalRequest);
       }
-
-      return instance.request(error.config);
     } else {
       return Promise.reject(error);
     }

@@ -10,7 +10,6 @@ import {
   compareDateDescend
 } from '../helpers/compareFunctions';
 import todoService from '../api/services/todos';
-import { AuthState } from './authSlice';
 
 export const filters = {
   ALL: 'ALL',
@@ -52,9 +51,7 @@ export const getTodos = createAsyncThunk(
   'todos/getAll',
   async (_, thunkAPI) => {
     try {
-      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.accessToken;
-      return await todoService.getAllTodos(token);
+      return await todoService.getAllTodos();
     } catch (error: any) {
       const message = error.response.data.message;
       return thunkAPI.rejectWithValue(message);
@@ -71,9 +68,7 @@ export const createTodo = createAsyncThunk(
   'todos/create',
   async (todoData: todoData, thunkAPI) => {
     try {
-      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.accessToken;
-      return await todoService.createTodo(todoData, token);
+      return await todoService.createTodo(todoData);
     } catch (error: any) {
       const message = error.response.data.message;
       return thunkAPI.rejectWithValue(message);
@@ -94,11 +89,8 @@ export const updateTodo = createAsyncThunk(
     const { id } = todoData;
 
     try {
-      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.accessToken;
-
       if (id) {
-        return await todoService.updateTodo(todoData, token);
+        return await todoService.updateTodo(todoData);
       }
     } catch (error: any) {
       const message = error.response.data.message;
@@ -111,12 +103,10 @@ export const deleteTodo = createAsyncThunk(
   'todos/delete',
   async (todoId: string | null, thunkAPI) => {
     try {
-      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.accessToken;
       if (todoId) {
-        return await todoService.deleteTodo(todoId, token);
+        return await todoService.deleteTodo(todoId);
       } else {
-        return await todoService.deleteTodo(null, token);
+        return await todoService.deleteTodo(null);
       }
     } catch (error: any) {
       const message = error.response.data.message;

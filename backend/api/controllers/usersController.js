@@ -35,7 +35,8 @@ export const refreshToken = asyncHandler(async (req, res) => {
     return;
   }
 
-  const user = await User.findOne({ accessToken: access_token });
+  const decoded = jwt.decode(refresh_token, process.env.REFRESH_TOKEN_SECRET);
+  const user = await User.findById(decoded.id).select('-password');
 
   if (!user) {
     res.status(401).json({ message: 'User not found' });
