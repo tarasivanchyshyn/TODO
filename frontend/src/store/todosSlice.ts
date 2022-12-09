@@ -1,15 +1,14 @@
 import { faSort, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { ascendOrder } from '../constants';
-import { dateSortOption, textSortOption } from '../constants';
+import { ascendOrder, dateSortOption, textSortOption } from '../constants';
 import {
   compareTextAscend,
   compareTextDescend,
   compareDateAscend,
   compareDateDescend
 } from '../helpers/compareFunctions';
-import todoService from '../api/services/todos';
+import todoService from '../api/services/todosService';
 
 export const filters = {
   ALL: 'ALL',

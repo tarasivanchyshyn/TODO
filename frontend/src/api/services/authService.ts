@@ -1,12 +1,8 @@
 import axios from 'axios';
 
 import { serverBaseURL } from '../../constants';
+import { RefreshData, UserData } from '../../store/authSlice';
 import store from '../../store/store';
-
-export interface UserData {
-  email: string;
-  password: string;
-}
 
 const loginUser = async (userData: UserData) => {
   const res = await axios.post(serverBaseURL + '/api/auth/login', userData);
@@ -17,11 +13,6 @@ const loginUser = async (userData: UserData) => {
 
   return res.data;
 };
-
-export interface RefreshData {
-  access_token: string;
-  refresh_token: string;
-}
 
 const refresh = async (tokens: RefreshData) => {
   const res = await axios.post(serverBaseURL + '/api/auth/refresh', tokens);

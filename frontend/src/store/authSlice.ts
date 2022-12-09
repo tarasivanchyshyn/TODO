@@ -1,13 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import authService, { RefreshData, UserData } from '../api/services/auth';
+import authService from '../api/services/authService';
+import { getUserFromLocalStorage } from '../helpers/getUserFromLocalStorage';
 
-const getUserFromLocalStorage = () => {
-  try {
-    return JSON.parse(localStorage.getItem('user') || '');
-  } catch (error) {
-    return null;
-  }
-};
 const user = getUserFromLocalStorage();
 
 export interface User {
@@ -34,6 +28,10 @@ const initialState: AuthState = {
   message: ''
 };
 
+export interface UserData {
+  email: string;
+  password: string;
+}
 export const login = createAsyncThunk(
   'auth/login',
   async (user: UserData, thunkAPI) => {
@@ -46,6 +44,10 @@ export const login = createAsyncThunk(
   }
 );
 
+export interface RefreshData {
+  access_token: string;
+  refresh_token: string;
+}
 export const refresh = createAsyncThunk(
   'auth/refresh',
   async (tokens: RefreshData, thunkAPI) => {
