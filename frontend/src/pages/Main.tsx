@@ -7,7 +7,7 @@ import Search from '../components/Search/Search';
 import Todos from '../components/Todos/Todos';
 import Spinner from '../components/UI/Spinner/Spinner';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { filters, getTodos, todosActions } from '../store/todosSlice';
+import { getTodos } from '../store/todosSlice';
 
 const Main = () => {
   const [createTodoModalIsShown, setCreateTodoModalIsShown] = useState(false);
@@ -15,18 +15,17 @@ const Main = () => {
   const { isLoading, isError, message } = useAppSelector(
     (state) => state.todos
   );
-  const { user } = useAppSelector((state) => state.auth);
+  const filter = useAppSelector((state) => state.todos.filterBy);
 
   useEffect(() => {
     if (isError) {
       console.log(message);
     }
-    dispatch(getTodos(filters.ALL));
+  }, [isError, message]);
 
-    return () => {
-      dispatch(todosActions.reset());
-    };
-  }, [user, dispatch, isError, message]);
+  useEffect(() => {
+    dispatch(getTodos(filter));
+  }, [dispatch, filter]);
 
   const toggleCreateTodoModal = () =>
     setCreateTodoModalIsShown(!createTodoModalIsShown);
