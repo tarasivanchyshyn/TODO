@@ -7,7 +7,7 @@ import Search from '../components/Search/Search';
 import Todos from '../components/Todos/Todos';
 import Spinner from '../components/UI/Spinner/Spinner';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { getTodos, todosActions } from '../store/todosSlice';
+import { filters, getTodos, todosActions } from '../store/todosSlice';
 
 const Main = () => {
   const [createTodoModalIsShown, setCreateTodoModalIsShown] = useState(false);
@@ -21,7 +21,7 @@ const Main = () => {
     if (isError) {
       console.log(message);
     }
-    dispatch(getTodos());
+    dispatch(getTodos(filters.ALL));
 
     return () => {
       dispatch(todosActions.reset());

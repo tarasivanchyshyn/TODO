@@ -48,9 +48,22 @@ const initialState: TodosState = {
 
 export const getTodos = createAsyncThunk(
   'todos/getAll',
-  async (_, thunkAPI) => {
+  async (filter: string, thunkAPI) => {
     try {
-      return await todoService.getAllTodos();
+      const todos = await todoService.getAllTodos();
+      if (filter === filters.ACTIVE) {
+        return {
+          todos: todos.filter((el: Todo) => el.done === false),
+          filter: filters.ACTIVE
+        };
+      }
+      if (filter === filters.COMPLETED) {
+        return {
+          todos: todos.filter((el: Todo) => el.done === true),
+          filter: filters.COMPLETED
+        };
+      }
+      return { todos, filter: filters.ALL };
     } catch (error: any) {
       const message = error.response.data.message;
       return thunkAPI.rejectWithValue(message);
@@ -154,7 +167,8 @@ const todosSlice = createSlice({
       .addCase(getTodos.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.todos = action.payload || [];
+        state.todos = action.payload.todos || [];
+        state.filterBy = action.payload.filter;
       })
       .addCase(getTodos.rejected, (state, action) => {
         state.isLoading = false;

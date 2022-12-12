@@ -30,10 +30,8 @@
   color: $color-clear-msg;
 }
 
-.visible {
-  visibility: visible;
-}
-
-.hidden {
-  visibility: hidden;
+.filter {
+  text-align: left;
+  font-size: 0.9rem;
+  color: $color-dark-grey;
 }

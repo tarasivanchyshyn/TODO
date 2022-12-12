@@ -1,58 +1,44 @@
-import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faSquareCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../UI/Button/Button';
-import { deleteTodo, filters, todosActions } from '../../../store/todosSlice';
+import { deleteTodo, filters, getTodos } from '../../../store/todosSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 import classes from './FilterTodo.module.scss';
 
 function FilterTodo() {
   const dispatch = useAppDispatch();
-  const ref = useRef<HTMLButtonElement>(null);
-  const [msgIsShown, setMessageIsShown] = useState(false);
   const items = useAppSelector((state) => state.todos.todos);
-
-  const { filterBy } = todosActions;
-  const { ALL, ACTIVE, COMPLETED } = filters;
-
-  const filterHandler = (chosenFilter: string) =>
-    dispatch(filterBy(chosenFilter));
+  const filter = useAppSelector((state) => state.todos.filterBy);
 
   const deleteCompletedHandler = () => {
     if (items.every((el) => !el.done)) return;
-
     dispatch(deleteTodo(null));
-    ref.current!.focus();
-    setMessageIsShown(true);
-    setTimeout(() => {
-      setMessageIsShown(false);
-    }, 2000);
   };
 
-  const { message, visible, hidden, actions, clear } = classes;
+  const getTodosHandler = (filter: string) => dispatch(getTodos(filter));
+
+  const { ALL, ACTIVE, COMPLETED } = filters;
 
   return (
     <>
-      <p className={`${message} ${msgIsShown ? visible : hidden}`}>
-        Items deleted!
-      </p>
-      <div className={actions}>
-        <Button onClick={() => filterHandler(ALL)} ref={ref}>
+      <p className={classes.filter}>Filter by: {filter}</p>
+      <div className={classes.actions}>
+        <Button onClick={() => getTodosHandler(ALL)}>
           <FontAwesomeIcon icon={faList} />
           All
         </Button>
-        <Button onClick={() => filterHandler(ACTIVE)}>
+        <Button onClick={() => getTodosHandler(ACTIVE)}>
           <FontAwesomeIcon icon={faSpinner} />
           Active
         </Button>
-        <Button onClick={() => filterHandler(COMPLETED)}>
+        <Button onClick={() => getTodosHandler(COMPLETED)}>
           <FontAwesomeIcon icon={faSquareCheck} />
           Completed
         </Button>
-        <Button onClick={deleteCompletedHandler} className={clear}>
+        <Button onClick={deleteCompletedHandler} className={classes.clear}>
           <FontAwesomeIcon icon={faTrash} />
           Clear completed
         </Button>

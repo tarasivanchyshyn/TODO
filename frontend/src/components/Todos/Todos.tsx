@@ -2,63 +2,38 @@ import { useMemo } from 'react';
 
 import TodoItem from './TodoItem/TodoItem';
 import FilterTodo from './FilterTodo/FilterTodo';
-import { filters } from '../../store/todosSlice';
 import { useAppSelector } from '../../hooks/hooks';
 
 import classes from './Todos.module.scss';
 
 const Todos = () => {
+  const { searchedValue } = useAppSelector((state) => state.todos);
   let items = useAppSelector((state) => state.todos.todos);
-
   items = useMemo(() => items, [items]);
-  const { filterBy, searchedValue } = useAppSelector((state) => state.todos);
 
-  if (searchedValue.trim()) {
-    items = items.filter((el) =>
-      el.text.toLowerCase().includes(searchedValue.toLowerCase())
-    );
-  }
-
-  const filteredActive = useMemo(
-    () => items.filter((item) => !item.done),
-    [items]
-  );
-  const filteredCompleted = useMemo(
-    () => items.filter((item) => item.done),
-    [items]
-  );
-
-  const filterTodo = () => {
-    switch (filterBy) {
-      case filters.COMPLETED:
-        return filteredCompleted;
-      case filters.ACTIVE:
-        return filteredActive;
-      default:
-        return items;
-    }
-  };
-
-  let content = <p className={classes.message}>No todos yet</p>;
-  let message = <p className={classes.noitems}>No items</p>;
-
-  const filteredItems =
-    filterTodo().length <= 0
-      ? message
-      : filterTodo().map((item) => (
-          <TodoItem key={item._id} item={item}></TodoItem>
-        ));
+  let todos;
 
   if (items.length) {
-    content = (
-      <div className={classes.todos}>
-        <ul className={classes.list}>{filteredItems}</ul>
-        <FilterTodo />
-      </div>
-    );
+    if (searchedValue.trim()) {
+      items = items.filter((el) =>
+        el.text.toLowerCase().includes(searchedValue.toLowerCase())
+      );
+    }
+
+    todos = items.map((item) => (
+      <TodoItem key={item._id} item={item}></TodoItem>
+    ));
   }
 
-  return <>{content}</>;
+  const message = <p className={classes.message}>No todos yet</p>;
+  const content = items.length ? todos : message;
+
+  return (
+    <div className={classes.todos}>
+      <ul className={classes.list}>{content}</ul>
+      <FilterTodo />
+    </div>
+  );
 };
 
 export default Todos;
