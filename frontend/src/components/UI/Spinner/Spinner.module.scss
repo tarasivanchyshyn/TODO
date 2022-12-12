@@ -1,8 +1,7 @@
 @import '../../../variables.scss';
 
 .spinner {
-  width: 100%;
-  height: 100vh;
+  margin-top: 5rem;
   @include flex-center;
 
   & svg {

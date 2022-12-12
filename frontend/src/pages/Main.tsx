@@ -32,7 +32,14 @@ const Main = () => {
     setCreateTodoModalIsShown(!createTodoModalIsShown);
 
   if (isLoading) {
-    return <Spinner />;
+    return (
+      <>
+        <Header />
+        <Input onOpenCreateTodoModal={toggleCreateTodoModal} />
+        <Search />
+        <Spinner />;
+      </>
+    );
   }
 
   return (
