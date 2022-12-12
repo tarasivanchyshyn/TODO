@@ -50,20 +50,8 @@ export const getTodos = createAsyncThunk(
   'todos/getAll',
   async (filter: string, thunkAPI) => {
     try {
-      const todos = await todoService.getAllTodos();
-      if (filter === filters.ACTIVE) {
-        return {
-          todos: todos.filter((el: Todo) => el.done === false),
-          filter: filters.ACTIVE
-        };
-      }
-      if (filter === filters.COMPLETED) {
-        return {
-          todos: todos.filter((el: Todo) => el.done === true),
-          filter: filters.COMPLETED
-        };
-      }
-      return { todos, filter: filters.ALL };
+      const todos = await todoService.getAllTodos(filter);
+      return { todos, filter };
     } catch (error: any) {
       const message = error.response.data.message;
       return thunkAPI.rejectWithValue(message);

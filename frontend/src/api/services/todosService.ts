@@ -1,9 +1,13 @@
 import { todoData, updateTodoData } from '../../store/todosSlice';
 import instance from './axios';
 
-const getAllTodos = async () => {
+const getAllTodos = async (filter: string) => {
   try {
-    const res = await instance.get('/api/todos');
+    const res = await instance.get('/api/todos', {
+      params: {
+        filter
+      }
+    });
     return res.data;
   } catch (err) {
     console.log(err);
