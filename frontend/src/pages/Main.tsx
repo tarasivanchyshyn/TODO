@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Modal from '../components/Modals/Modal/Modal';
 import Header from '../components/Header/Header';
@@ -8,42 +7,38 @@ import Search from '../components/Search/Search';
 import Todos from '../components/Todos/Todos';
 import Spinner from '../components/UI/Spinner/Spinner';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { getTodos, todosActions } from '../store/todosSlice';
-import { logout } from '../store/authSlice';
+import { getTodos } from '../store/todosSlice';
 
 const Main = () => {
   const [createTodoModalIsShown, setCreateTodoModalIsShown] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
   const { isLoading, isError, message } = useAppSelector(
     (state) => state.todos
   );
-
-  const isTokenActive = localStorage.getItem('user');
-
-  useEffect(() => {
-    if (!isTokenActive) {
-      dispatch(logout());
-    }
-  }, [dispatch, isTokenActive]);
+  const filter = useAppSelector((state) => state.todos.filterBy);
 
   useEffect(() => {
     if (isError) {
       console.log(message);
     }
-    dispatch(getTodos());
+  }, [isError, message]);
 
-    return () => {
-      dispatch(todosActions.reset());
-    };
-  }, [user, navigate, dispatch, isError, message]);
+  useEffect(() => {
+    dispatch(getTodos(filter));
+  }, [dispatch, filter]);
 
   const toggleCreateTodoModal = () =>
     setCreateTodoModalIsShown(!createTodoModalIsShown);
 
   if (isLoading) {
-    return <Spinner />;
+    return (
+      <>
+        <Header />
+        <Input onOpenCreateTodoModal={toggleCreateTodoModal} />
+        <Search />
+        <Spinner />;
+      </>
+    );
   }
 
   return (

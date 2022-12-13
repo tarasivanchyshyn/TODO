@@ -12,3 +12,4 @@ export const inputPlaceholder = 'Enter todo text';
 export const searchPlaceholder = 'Search for todos';
 
 export const serverBaseURL = 'https://todos-h97u.onrender.com';
+export const localURL = 'http://localhost:5000';

@@ -8,6 +8,7 @@ import { login, authActions } from '../../store/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 import classes from './Auth.module.scss';
+import { filters, getTodos } from '../../store/todosSlice';
 
 const Login: FC = () => {
   const [formData, setFormData] = useState({
@@ -52,6 +53,7 @@ const Login: FC = () => {
 
     const userData = { email, password };
     dispatch(login(userData));
+    dispatch(getTodos(filters.ALL));
   };
 
   const {

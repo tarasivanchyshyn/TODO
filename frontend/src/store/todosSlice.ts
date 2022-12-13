@@ -1,16 +1,14 @@
 import { faSort, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { ascendOrder } from '../constants';
-import { dateSortOption, textSortOption } from '../constants';
+import { ascendOrder, dateSortOption, textSortOption } from '../constants';
 import {
   compareTextAscend,
   compareTextDescend,
   compareDateAscend,
   compareDateDescend
 } from '../helpers/compareFunctions';
-import todoService from '../api/services/todos';
-import { AuthState } from './authSlice';
+import todoService from '../api/services/todosService';
 
 export const filters = {
   ALL: 'ALL',
@@ -50,11 +48,10 @@ const initialState: TodosState = {
 
 export const getTodos = createAsyncThunk(
   'todos/getAll',
-  async (_, thunkAPI) => {
+  async (filter: string, thunkAPI) => {
     try {
-      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.token;
-      return await todoService.getAllTodos(token);
+      const todos = await todoService.getAllTodos(filter);
+      return { todos, filter };
     } catch (error: any) {
       const message = error.response.data.message;
       return thunkAPI.rejectWithValue(message);
@@ -71,9 +68,7 @@ export const createTodo = createAsyncThunk(
   'todos/create',
   async (todoData: todoData, thunkAPI) => {
     try {
-      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.token;
-      return await todoService.createTodo(todoData, token);
+      return await todoService.createTodo(todoData);
     } catch (error: any) {
       const message = error.response.data.message;
       return thunkAPI.rejectWithValue(message);
@@ -94,11 +89,8 @@ export const updateTodo = createAsyncThunk(
     const { id } = todoData;
 
     try {
-      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.token;
-
       if (id) {
-        return await todoService.updateTodo(todoData, token);
+        return await todoService.updateTodo(todoData);
       }
     } catch (error: any) {
       const message = error.response.data.message;
@@ -111,12 +103,10 @@ export const deleteTodo = createAsyncThunk(
   'todos/delete',
   async (todoId: string | null, thunkAPI) => {
     try {
-      const { auth } = (await thunkAPI.getState()) as { auth: AuthState };
-      const token = auth.user?.token;
       if (todoId) {
-        return await todoService.deleteTodo(todoId, token);
+        return await todoService.deleteTodo(todoId);
       } else {
-        return await todoService.deleteTodo(null, token);
+        return await todoService.deleteTodo(null);
       }
     } catch (error: any) {
       const message = error.response.data.message;
@@ -165,7 +155,8 @@ const todosSlice = createSlice({
       .addCase(getTodos.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.todos = action.payload || [];
+        state.todos = action.payload.todos || [];
+        state.filterBy = action.payload.filter;
       })
       .addCase(getTodos.rejected, (state, action) => {
         state.isLoading = false;

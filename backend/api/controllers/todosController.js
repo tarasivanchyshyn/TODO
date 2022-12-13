@@ -2,7 +2,16 @@ import asyncHandler from 'express-async-handler';
 import Todo from '../models/todoModel.js';
 
 export const getTodos = asyncHandler(async (req, res) => {
-  const todos = await Todo.find({ user: req.user.id });
+  let todos;
+  if (req.query.filter === 'ACTIVE') {
+    todos = await Todo.find({ user: req.user.id, done: false });
+  }
+  if (req.query.filter === 'COMPLETED') {
+    todos = await Todo.find({ user: req.user.id, done: true });
+  }
+  if (req.query.filter === 'ALL') {
+    todos = await Todo.find({ user: req.user.id });
+  }
 
   res.status(200).json(todos);
 });

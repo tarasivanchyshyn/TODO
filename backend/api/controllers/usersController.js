@@ -18,7 +18,8 @@ export const loginUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      token: generateToken(user._id)
+      accessToken: generateAccessToken(user._id),
+      refreshToken: generateRefreshToken(user._id)
     });
   } else {
     res.status(400).json({ message: 'Invalid email or password' });
@@ -26,8 +27,36 @@ export const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: 15
+export const refreshToken = asyncHandler(async (req, res) => {
+  const { access_token, refresh_token } = req.body;
+
+  if (!access_token || !refresh_token) {
+    res.status(400).json({ message: 'Tokens not provided' });
+    return;
+  }
+
+  const decoded = jwt.decode(refresh_token, process.env.REFRESH_TOKEN_SECRET);
+  const user = await User.findById(decoded.id).select('-password');
+
+  if (!user) {
+    res.status(401).json({ message: 'User not found' });
+    return;
+  }
+
+  res.json({
+    accessToken: generateAccessToken(user._id),
+    refreshToken: generateRefreshToken(user._id)
+  });
+});
+
+const generateAccessToken = (id) => {
+  return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: '10s'
+  });
+};
+
+const generateRefreshToken = (id) => {
+  return jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: '1d'
   });
 };

@@ -33,4 +33,8 @@
   &::-webkit-search-cancel-button:hover {
     cursor: pointer;
   }
+
+  &::placeholder {
+    color: $color-light-gray;
+  }
 }
