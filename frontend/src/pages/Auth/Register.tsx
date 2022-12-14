@@ -1,21 +1,24 @@
-import { useState, FormEvent, ChangeEvent, useEffect, FC } from 'react';
+import { useState, FormEvent, ChangeEvent, FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import { login, authActions } from '../../store/authSlice';
+import { register, authActions } from '../../store/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 import classes from './Auth.module.scss';
 import { filters, getTodos } from '../../store/todosSlice';
 
-const Login: FC = () => {
+const Register: FC = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    password: ''
+    password: '',
+    password2: ''
   });
-  const { email, password } = formData;
+  const { name, email, password, password2 } = formData;
   const [msg, setMsg] = useState('');
   const [msgIsShown, setMsgIsShown] = useState(false);
 
@@ -44,14 +47,14 @@ const Login: FC = () => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setMsg('Please fill all the fields');
+    if (password !== password2) {
+      setMsg('Passwords dont match');
       setMsgIsShown(true);
       return;
     }
 
-    const userData = { email, password };
-    dispatch(login(userData));
+    const userData = { name, email, password };
+    dispatch(register(userData));
     dispatch(getTodos(filters.ALL));
   };
 
@@ -74,9 +77,17 @@ const Login: FC = () => {
   return (
     <div className={wrapper}>
       <h1 className={heading}>
-        <FontAwesomeIcon icon={faSignInAlt} /> Log in
+        <FontAwesomeIcon icon={faUser} /> Registration
       </h1>
       <form onSubmit={submitHandler} className={form}>
+        <input
+          type="text"
+          className={input}
+          name="name"
+          value={name}
+          placeholder="Enter name"
+          onChange={inputChangeHandler}
+        />
         <input
           type="email"
           className={input}
@@ -89,21 +100,30 @@ const Login: FC = () => {
           type="password"
           className={input}
           name="password"
-          value={password}
           minLength={4}
+          value={password}
           placeholder="Enter password"
           onChange={inputChangeHandler}
         />
+        <input
+          type="password"
+          className={input}
+          name="password2"
+          minLength={4}
+          value={password2}
+          placeholder="Confirm password"
+          onChange={inputChangeHandler}
+        />
         <p className={`${errMsg} ${msgIsShown ? visible : hidden}`}>{msg}</p>
-        <button type="submit" className={button}>
-          Log in
-        </button>
+        <Button type="submit" className={button}>
+          Register
+        </Button>
         <p className={altLink}>
-          New user? <Link to={'/register'}>Sign Up</Link>
+          Already registered? <Link to={'/login'}>Login</Link>
         </p>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

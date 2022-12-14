@@ -4,6 +4,16 @@ import { serverBaseURL } from '../../constants';
 import { RefreshData, UserData } from '../../store/authSlice';
 import store from '../../store/store';
 
+export const registerUser = async (userData: UserData) => {
+  const res = await axios.post(serverBaseURL + '/api/auth/register', userData);
+
+  if (res.data) {
+    localStorage.setItem('user', JSON.stringify(res.data));
+  }
+
+  return res.data;
+};
+
 const loginUser = async (userData: UserData) => {
   const res = await axios.post(serverBaseURL + '/api/auth/login', userData);
 
@@ -36,6 +46,7 @@ const logoutUser = () => {
 };
 
 const authService = {
+  registerUser,
   loginUser,
   logoutUser,
   refresh
