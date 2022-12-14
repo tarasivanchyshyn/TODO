@@ -28,6 +28,18 @@ const initialState: AuthState = {
   message: ''
 };
 
+export const register = createAsyncThunk(
+  'auth/register',
+  async (user: UserData, thunkAPI) => {
+    try {
+      return await authService.registerUser(user);
+    } catch (error: any) {
+      const message = error.response.data.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export interface UserData {
   email: string;
   password: string;
@@ -78,6 +90,20 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
       .addCase(login.pending, (state) => {
         state.isLoading = true;
       })
