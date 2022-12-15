@@ -1,13 +1,6 @@
 import ReactDOM from 'react-dom';
 import { useRef, useState, FormEvent } from 'react';
-import {
-  addHours,
-  addYears,
-  format,
-  isBefore,
-  isEqual,
-  subYears
-} from 'date-fns';
+import { addYears, format, isBefore, isEqual, subYears } from 'date-fns';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../UI/Button/Button';
