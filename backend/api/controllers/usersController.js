@@ -7,11 +7,13 @@ export const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     res.status(400).json({ message: 'Please fill all the fields' });
+    return;
   }
 
   const userExists = await User.findOne({ email });
   if (userExists) {
     res.status(400).json({ message: 'User with this email already exists' });
+    return;
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -80,11 +82,11 @@ export const refreshToken = asyncHandler(async (req, res) => {
 
 const generateAccessToken = (id) => {
   return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: '10s'
+    expiresIn: '15m'
   });
 };
 const generateRefreshToken = (id) => {
   return jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: '1d'
+    expiresIn: '15d'
   });
 };

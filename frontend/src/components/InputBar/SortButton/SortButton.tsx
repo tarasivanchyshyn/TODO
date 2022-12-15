@@ -10,7 +10,7 @@ import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons';
 import { faArrowUpShortWide } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../UI/Button/Button';
-import { filters, getTodos, todosActions } from '../../../store/todosSlice';
+import { filters, todosActions } from '../../../store/todosSlice';
 import { dateSortOption, textSortOption } from '../../../constants';
 import { ascendOrder, descendOrder } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
@@ -55,7 +55,7 @@ function SortButton() {
   };
 
   const resetSorting = () => {
-    dispatch(getTodos(filters.ALL));
+    dispatch(todosActions.filterBy(filters.ALL));
     dispatch(setIcon(faSort));
     setOpen(false);
   };

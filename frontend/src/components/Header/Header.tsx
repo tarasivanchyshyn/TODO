@@ -4,6 +4,7 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { logout, authActions } from '../../store/authSlice';
+import { filters, todosActions } from '../../store/todosSlice';
 
 import classes from './Header.module.scss';
 
@@ -15,6 +16,8 @@ const Header: FC = () => {
     dispatch(logout());
     dispatch(authActions.reset());
   };
+
+  const showAll = () => dispatch(todosActions.filterBy(filters.ALL));
 
   const logoutSection = (
     <div className={classes.logout}>
@@ -28,7 +31,9 @@ const Header: FC = () => {
 
   return (
     <div className={classes.wrapper}>
-      <h1 className={classes.header}>My Todos</h1>
+      <h1 className={classes.header} onClick={showAll}>
+        My Todos
+      </h1>
       {user ? logoutSection : null}
     </div>
   );

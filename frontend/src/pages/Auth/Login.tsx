@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { login, authActions } from '../../store/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { filters, todosActions } from '../../store/todosSlice';
 
 import classes from './Auth.module.scss';
-import { filters, getTodos } from '../../store/todosSlice';
 
 const Login: FC = () => {
   const [formData, setFormData] = useState({
@@ -52,7 +52,7 @@ const Login: FC = () => {
 
     const userData = { email, password };
     dispatch(login(userData));
-    dispatch(getTodos(filters.ALL));
+    dispatch(todosActions.filterBy(filters.ALL));
   };
 
   const {

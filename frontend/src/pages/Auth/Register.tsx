@@ -7,9 +7,9 @@ import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { register, authActions } from '../../store/authSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { filters, todosActions } from '../../store/todosSlice';
 
 import classes from './Auth.module.scss';
-import { filters, getTodos } from '../../store/todosSlice';
 
 const Register: FC = () => {
   const [formData, setFormData] = useState({
@@ -55,7 +55,7 @@ const Register: FC = () => {
 
     const userData = { name, email, password };
     dispatch(register(userData));
-    dispatch(getTodos(filters.ALL));
+    dispatch(todosActions.filterBy(filters.ALL));
   };
 
   const {

@@ -3,7 +3,7 @@ import { faList, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faSquareCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../UI/Button/Button';
-import { deleteTodo, filters, getTodos } from '../../../store/todosSlice';
+import { deleteTodo, filters, todosActions } from '../../../store/todosSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 import classes from './FilterTodo.module.scss';
@@ -18,7 +18,8 @@ function FilterTodo() {
     dispatch(deleteTodo(null));
   };
 
-  const getTodosHandler = (filter: string) => dispatch(getTodos(filter));
+  const getTodosHandler = (filter: string) =>
+    dispatch(todosActions.filterBy(filter));
 
   const { ALL, ACTIVE, COMPLETED } = filters;
 
