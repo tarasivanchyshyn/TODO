@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import { useRef, useState, FormEvent } from 'react';
-import { format, isBefore, isEqual } from 'date-fns';
+import { addYears, format, isBefore, isEqual, subYears } from 'date-fns';
 import { faSort } from '@fortawesome/free-solid-svg-icons';
 
 import Button from '../../UI/Button/Button';
@@ -94,6 +94,11 @@ function ModalOverlay(props: UniversalProps) {
   const usedCreatedDate = formatDateString(todo?.creationDate);
   const usedExpirationDate = formatDateString(todo?.expirationDate);
 
+  const maxEnteredDate = addYears(new Date(), 100).toISOString();
+  const minEnteredDate = subYears(new Date(), 100).toISOString();
+  const maxDate = maxEnteredDate.substring(0, minEnteredDate.length - 8);
+  const minDate = minEnteredDate.substring(0, minEnteredDate.length - 8);
+
   return (
     <>
       {dateError && <ErrorModal onClose={() => setDateError(false)} />}
@@ -125,6 +130,8 @@ function ModalOverlay(props: UniversalProps) {
               className={input}
               id="created"
               required
+              min={minDate}
+              max={maxDate}
             />
           </div>
           <div className={control}>
@@ -138,6 +145,8 @@ function ModalOverlay(props: UniversalProps) {
               className={input}
               id="expires"
               required
+              min={minDate}
+              max={maxDate}
             />
           </div>
           <div className={actions}>
